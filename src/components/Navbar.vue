@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <router-link to="/gradebooks" class="navbar-brand">Gradebooks</router-link>
+    <router-link to="/" class="navbar-brand">Gradebooks</router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -17,12 +17,25 @@
         </li>
 
         <li class="nav-item">
-          <router-link class="nav-link" to="/gradebooks" >Gradebooks</router-link>
+          <router-link class="nav-link" to="/professors" >All professors</router-link>
         </li>
 
         <li class="nav-item">
-          <router-link class="nav-link" to="/professors" >Professors</router-link>
+          <router-link class="nav-link" to="/my-gradebook" >My gradebook</router-link>
         </li>
+
+        <li class="nav-item">
+          <router-link class="nav-link" to="/gradebooks/create" >Add gradebook</router-link>
+        </li>
+
+        <li class="nav-item">
+          <router-link class="nav-link" to="/professors/create" >Add professor</router-link>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" to="/professo" >Logout</a>
+        </li>
+
 
       </ul>
       <form class="form-inline my-2 my-lg-0">
