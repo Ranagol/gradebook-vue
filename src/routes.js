@@ -12,7 +12,7 @@ import AddStudent from './components/students/AddStudent';
 import AddComment from './components/comments/AddComment';
 
 export const routes = [
-  { path: '*', redirect:'/login'},
+  //{ path: '*', redirect:'/login'},
   { path: '/login', name: 'login', component: Login },
   { path: '/register', name: 'register', component: Register },
 

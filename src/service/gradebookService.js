@@ -17,6 +17,15 @@ class GradebookService {
       }
     }
   }
+
+  async getGradebookById(id){
+    try {
+      const response = await HTTP.get(`/gradebooks/${id}`);
+      return response.data;
+    } catch (error) {
+      console.dir(error);
+    }
+  }
 }
 
 const gradebookService = new GradebookService;

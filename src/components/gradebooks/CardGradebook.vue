@@ -2,7 +2,7 @@
   <div class="card card-width border border-success ">
     <div class="card-header bg-success"></div>
     <div class="card-body">
-      <h5 class="card-title">{{ gradebook.name }}</h5>
+      <h5 class="card-title"><router-link :to="`/gradebooks/${this.gradebook.id}`" class="link">{{ gradebook.name }}</router-link></h5>
         <p class="card-text">Profesor: </p>
         <router-link :to="`/professors/${this.gradebook.professor.id}`" class="link">
           {{ gradebook.professor.first_name }} {{ gradebook.professor.last_name }}
@@ -16,6 +16,9 @@
 export default {
   name: 'CardGradebook',
   props: ['gradebook'],
+  methods: {
+   
+  }
   
 }
 </script>

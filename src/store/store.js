@@ -11,7 +11,10 @@ export const store = new Vuex.Store({
   getters,
   state: {
     gradebooks: [],
+    gradebook: '',
+    professors: [],
     professor: '',
+    
   },
   mutations,
   actions,
