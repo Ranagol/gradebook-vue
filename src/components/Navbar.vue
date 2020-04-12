@@ -33,7 +33,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" to="/professo" >Logout</a>
+          <a @click="logout" class="nav-link" >Logout</a>
         </li>
 
 
@@ -48,7 +48,13 @@
 
 
 <script>
+import { authService } from '../service/authService';
 export default {
-  
+  methods: {
+    logout(){
+      authService.logout();
+      this.$router.push('login');
+    }
+  }
 }
 </script>

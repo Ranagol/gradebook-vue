@@ -29,7 +29,7 @@ export default {
     login(){
       console.log(this.email, this.password);
       authService.login(this.email, this.password).then(()=>{
-          this.$router.push('gradebooks');
+        this.$router.push('/');
       }).catch(() => alert('invalid credentials given during login process'));
     }
   }
