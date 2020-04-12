@@ -1,12 +1,15 @@
 import gradebookService from '../service/gradebookService';
+import professorService from '../service/professorService';
+
 export default {
   async getAllGradebooks({commit}){
-    try {
-      const gradebooks = await gradebookService.getAllGradebooks();
-      commit('getAllGradebooks', gradebooks);
-    } catch (error) {
-      console.log('Error from actions/getAllGradebooks: ', error);
-    }
-    
+    const gradebooks = await gradebookService.getAllGradebooks();
+    commit('getAllGradebooks', gradebooks);
+  },
+
+  async getProfessor({commit}, id){
+    const professor = await professorService.getProfessorById(id);
+    commit('setProfessor', professor);
   }
+
 }
