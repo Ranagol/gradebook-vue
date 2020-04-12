@@ -57,6 +57,7 @@ export default {
     async register(){
       try {
         await authService.register(this.first_name, this.last_name, this.email, this.password, this.password_confirmation);
+        this.$router.push('/');
       } catch (error) {
         console.log(error);
       }
