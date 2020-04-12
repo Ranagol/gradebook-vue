@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
   
   getters,
   state: {
-    
+    gradebooks: [],
   },
   mutations,
   actions,
