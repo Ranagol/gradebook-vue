@@ -53,7 +53,7 @@ export default {
   methods: {
     logout(){
       authService.logout();
-      this.$router.push('login');
+      this.$router.push('/login');
     }
   }
 }
