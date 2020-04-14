@@ -118,6 +118,8 @@ export default {
   async created(){
     this.availableGradebooks = await gradebookService.getAvaliableGradebooks();
     console.dir(this.availableGradebooks);
+    //TODO LOSI - valamiert az ujonnan krealt professzorok nem jelennek meg a /professors oldalon
+    //mikor professort krealok es gradebookot akarok hozzacsatolni, akkor a gradebookban nem jelenik meg a professor_id
   }
   
   

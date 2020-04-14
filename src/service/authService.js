@@ -3,7 +3,6 @@ import axios from 'axios';
 export default class AuthService {
   constructor() {//this is a must. This will set up automatically the token into the request header.
     axios.defaults.baseURL = 'http://localhost:8000/api/';
-    //TODO LOSI - EZT IDE BE LEHET/BE KELL TENNI? axios.defaults.headers.accept = "application/json"
     this.setAxiosDefaultAuthorizationHeader();//set the token in the header of our requests
   }
 
