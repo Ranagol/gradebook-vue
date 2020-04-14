@@ -91,7 +91,7 @@ export default {
     }
   },
   methods: {
-    async onSubmitProf(){//TODO LOSI professor creating is not really working...
+    async onSubmitProf(){
       const bodyProf = {
         first_name: this.first_name,
         last_name: this.last_name,
@@ -118,7 +118,7 @@ export default {
   async created(){
     this.availableGradebooks = await gradebookService.getAvaliableGradebooks();
     console.dir(this.availableGradebooks);
-    //TODO LOSI - valamiert az ujonnan krealt professzorok nem jelennek meg a /professors oldalon
+   
     //mikor professort krealok es gradebookot akarok hozzacsatolni, akkor a gradebookban nem jelenik meg a professor_id
   }
   

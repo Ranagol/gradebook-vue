@@ -2,7 +2,11 @@
   <div>
     <h3>Gradebooks</h3>
     <div class="d-flex flex-row flex-wrap">
-      <app-cardgradebook v-for="gradebook in gradebooks" :key="gradebook.id" :gradebook='gradebook'></app-cardgradebook>
+      <app-cardgradebook
+            v-for="gradebook in gradebooks"
+            :key="gradebook.id"
+            :gradebook="gradebook"
+      />
     </div>
     
   </div>
@@ -14,6 +18,9 @@ import { mapGetters, mapActions } from 'vuex';
 import CardGradebook from './CardGradebook';
 export default {
   name: 'Gradebooks',
+  components: {
+    'app-cardgradebook': CardGradebook,
+  },
   computed: {
     ...mapGetters(['gradebooks']),
   },
@@ -24,13 +31,8 @@ export default {
     console.log(`beforeRouteEnter data fetching activated. From: ${from.path} to: ${to.path}`);
     next(vm => {
       vm.getAllGradebooks()//beforeRouteEnter has no accces to this
-      console.log(this.gradebooks);
       console.log('beforeRouteEnter has finished its job, gradbooks are here.')
     })
-  },
-  
-  components: {
-    'app-cardgradebook': CardGradebook,
   }
 }
 </script>

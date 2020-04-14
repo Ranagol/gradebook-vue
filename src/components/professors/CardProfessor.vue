@@ -1,6 +1,6 @@
 <template>
   <div class="card card-width border border-success ">
-    <img class="card-img-top" :src="professor.first_picture.picture_url" alt="Card image cap">
+    <img class="card-img-top" :src="firstPicture.picture_url" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title"></h5>
       <h5 class="card-title">
@@ -8,7 +8,7 @@
           Professor: {{ professor.first_name }} {{ professor.last_name }}
         </router-link>
       </h5>
-      <p class="card-text">Gradebook: <router-link :to="`/gradebooks/${professor.gradebook.id}`" class="link">{{ professor.gradebook.name }}</router-link></p>
+      <p class="card-text">Gradebook: <router-link :to="`/gradebooks/${gradebook.id}`" class="link">{{ gradebook.name }}</router-link></p>
     </div>
   </div>
 </template>
@@ -16,12 +16,23 @@
 <script>
 export default {
   name: 'CardProfessor',
-  props: ['professor'],
-  data() {
-    return {
-      
+  props: {
+    professor: {
+      required: false,
+      type: Object,
+      default: function () {
+        return {};
+      }
     }
   },
+  computed: {
+    firstPicture() {
+      return this.professor.first_picture || {};
+    },
+    gradebook() {
+      return this.professor.gradebook || {};
+    }
+  }
 }
 </script>
 

@@ -56,16 +56,17 @@ export default {
       counter: 0,
       content: '',
       gradebookId: this.$route.params.id
+      
     }
   },
   methods: {
-    async createNewComment(){//TODO LOSI - ISSUE: WHEN A NEW COMMENT IS CREATED, THE NEW COMMENT IS NOT SHOWING UP, I MUST REFRESH THE PAGE TO SEE IT
+    async createNewComment(){
       const comment = {
         content: this.content,
       }
-      await commentService.createComment(comment, this.gradebookId);
-      console.log(comment)
-      await gradebookService.getGradebookById(this.gradebookId);
+      const createdComment = await commentService.createComment(comment, this.gradebookId);
+      this.gradebook.comments.push(createdComment);
+      this.content = '';
     },
 
     async deleteGradebook(id){
@@ -80,9 +81,9 @@ export default {
       return comments;
     }
   },
-  async created(){//TODO LOSI - itt egy komponenst használok kettő weboldalhoz. Az egyik nem akar beindulni, a másik működik. Ez itt a logika, ami eldönti, hogy mi inuljon.
+  async created(){
     console.dir(this.$route.path);
-    if (this.$route.path == '/my-gradebook') {//ez a problémás opció, beindul, de nem kapja le az adatokat. A hiba a laravelban van, GradebookController@mygradebook
+    if (this.$route.path == '/my-gradebook') {
       this.gradebook = await gradebookService.getMyGradebook();
     } else {
       this.gradebook = await gradebookService.getGradebookById(this.gradebookId);
