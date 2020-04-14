@@ -26,6 +26,15 @@ class GradebookService {
       console.dir(error);
     }
   }
+
+  async getAvaliableGradebooks(){
+    try {
+      const response = await HTTP.get("/gradebooks/avaliable");
+      return response.data;
+    } catch (error) {
+      console.dir(error);
+    }
+  }
 }
 
 const gradebookService = new GradebookService;
