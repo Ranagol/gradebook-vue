@@ -38,7 +38,7 @@ class ProfessorService {
 
   async getAvaliableProfessors(){
     try {
-      const response = await HTTP.get("/professors/available");
+      const response = await HTTP.get("/available-professors");
       return response.data;
     } catch (error) {
       console.dir(error);

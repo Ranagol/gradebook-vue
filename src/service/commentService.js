@@ -2,14 +2,18 @@ import { HTTP } from './baseService';
 
 class CommentService {
 
-  async createComment(body){
+  async createComment(comment, gradebookId){
+    console.dir(gradebookId);
     try {
-      await HTTP.post('/comments', body);
+      //'/gradebooks/{gradebook}/comments/create'
+      await HTTP.post(`/gradebooks/${gradebookId}/comments/create`, comment);
     } catch (error) {
       console.log('Error with comment creating');
       console.dir(error);
     }
   }
+
+  
 
 
 

@@ -20,7 +20,7 @@ export default {
   name: 'PictureUrlInput',
   props: {
     value: {//TODO LOSI-----Vue warn]: Invalid prop: type check failed for prop "value". Expected Object, got String with value "https://www.fillmurray.com/420/320". TEHAT. MINDIG MIKOR BETESZEK EGY LINKET, AKKOR EZ A HIBAKIJELZES JON.
-      type: Object,
+      type: String,
       required: true,
       default: function() {
         return {};
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      pictureUrl: ''
+      pictureUrl: this.value
     }
   },
   watch: {

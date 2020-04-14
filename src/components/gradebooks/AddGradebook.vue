@@ -25,7 +25,7 @@
       <label for="professor">Assign this gradebook to a professor:</label>
       <select class="form-control" v-model="professor_id" id="professor">
         <option selected value="">Do not assign</option>
-        <option v-for="professor in availableProfessors" :key="professor.id" :value="professor.id">{{ professor.name }}</option> -->
+        <option v-for="professor in availableProfessors" :key="professor.id" :value="professor.id">{{ professor.first_name }}</option>
       </select>
     </div> 
 
@@ -61,12 +61,12 @@ export default {
       }
       await gradebookService.createGradebook(gradebook);
       console.log('Uspesno kreiran gradebook');
-      this.$router.push('/gradebooks');
+      this.$router.push('/');
 
     }
   },
-  created(){
-    this.availableProfessors = professorService.getAvaliableProfessors();
+  async created(){
+    this.availableProfessors = await professorService.getAvaliableProfessors();
   }
   
 }

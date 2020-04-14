@@ -74,8 +74,7 @@ import PictureUrlInput from './PictureUrlInput';
 import professorService from '../../service/professorService';
 import gradebookService from '../../service/gradebookService';
 export default {
-//TODO LOSI - GRADEBOOK $table->unsignedBigInteger('professor_id')->nullable; ennek ellenere a Heidiben nekem kulon be kell meg stiklizni hogy a prof id nullable lehessen. Hol itt a gond? A prof id muszaj hogy nullable lehessen, nem?
-//TODO LOSI: hoppa, nekem a professor TABLE user_id is nullable kell hogy tegyem, hogy kell ezt csinalni?
+
   name: 'AddProfessor',
   components: {
     PictureUrlInput,
