@@ -24,14 +24,11 @@ export default {
     console.log(`beforeRouteEnter data fetching activated. From: ${from.path} to: ${to.path}`);
     next(vm => {
       vm.getAllGradebooks()//beforeRouteEnter has no accces to this
+      console.log(this.gradebooks);
       console.log('beforeRouteEnter has finished its job, gradbooks are here.')
     })
   },
-  /*
-  created(){
-    this.getAllGradebooks();
-  },
-  */
+  
   components: {
     'app-cardgradebook': CardGradebook,
   }

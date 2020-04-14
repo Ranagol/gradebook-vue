@@ -3,7 +3,7 @@
   <form @submit.prevent="onSubmit">
     <p>AddGradebook</p>
     <div class="form-group row">
-      <label for="name" class="col-4 col-form-label">Name</label>
+      <label for="name" class="col-4 col-form-label">Gradebook name</label>
       <div class="col-8">
         <div class="input-group">
           <input
@@ -18,31 +18,55 @@
       </div>
     </div>
     
-  
     
+
+    <!-- SELECT PROFESSOR -->
+    <div class="form-group">
+      <label for="professor">Assign this gradebook to a professor:</label>
+      <select class="form-control" v-model="professor_id" id="professor">
+        <option selected value="">Do not assign</option>
+        <option v-for="professor in availableProfessors" :key="professor.id" :value="professor.id">{{ professor.name }}</option> -->
+      </select>
+    </div> 
+
+    <!-- SUBMIT -->
     <div class="form-group row">
       <div class="offset-4 col-8">
         <button name="submit" type="submit" class="btn btn-primary">Submit</button>
       </div>
-    </div>
+    </div>    
+    
   </form>
 
   </div>
 </template>
 
 <script>
+import professorService from '../../service/professorService';
+import gradebookService from '../../service/gradebookService';
 export default {
   name: 'AddGradebook',
   data(){
     return{
       name:'',
-      gradebook:'',//TODO HOGY KEZDJEK AZ EGESZHEZ HOZZA?
+      professor_id:'',
+      availableProfessors: [],
     }
   },
   methods: {
-    onSubmit(){
+    async onSubmit(){
+      const gradebook = {
+        name: this.name,
+        professor_id: this.professor_id,
+      }
+      await gradebookService.createGradebook(gradebook);
+      console.log('Uspesno kreiran gradebook');
+      this.$router.push('/gradebooks');
 
     }
+  },
+  created(){
+    this.availableProfessors = professorService.getAvaliableProfessors();
   }
   
 }

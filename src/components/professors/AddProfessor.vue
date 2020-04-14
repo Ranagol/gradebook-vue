@@ -39,7 +39,7 @@
     <!-- SELECT GRADEBOOK -->
       <div class="form-group">
         <label for="gradebook">Assign this professor to a gradebook:</label>
-        <select class="form-control" v-model="selectedGradebookId" id="gradebook">
+        <select class="form-control" v-model="gradebook_id" id="gradebook">
           <option selected value="">Do not assign</option>
           <option v-for="gradebook in availableGradebooks" :key="gradebook.id" :value="gradebook.id">{{ gradebook.name }}</option> -->
         </select>
@@ -75,6 +75,7 @@ import professorService from '../../service/professorService';
 import gradebookService from '../../service/gradebookService';
 export default {
 //TODO LOSI - GRADEBOOK $table->unsignedBigInteger('professor_id')->nullable; ennek ellenere a Heidiben nekem kulon be kell meg stiklizni hogy a prof id nullable lehessen. Hol itt a gond? A prof id muszaj hogy nullable lehessen, nem?
+//TODO LOSI: hoppa, nekem a professor TABLE user_id is nullable kell hogy tegyem, hogy kell ezt csinalni?
   name: 'AddProfessor',
   components: {
     PictureUrlInput,
@@ -91,7 +92,7 @@ export default {
     }
   },
   methods: {
-    async onSubmitProf(){
+    async onSubmitProf(){//TODO LOSI professor creating is not really working...
       const bodyProf = {
         first_name: this.first_name,
         last_name: this.last_name,
@@ -117,6 +118,7 @@ export default {
   },
   async created(){
     this.availableGradebooks = await gradebookService.getAvaliableGradebooks();
+    console.dir(this.availableGradebooks);
   }
   
   

@@ -27,6 +27,15 @@ class GradebookService {
     }
   }
 
+  async createGradebook(gradebook){
+    try {
+      await HTTP.post('/gradebooks', gradebook);
+    } catch (error) {
+      console.log('Error with gradebook creating');
+      console.dir(error);
+    }
+  }
+
   async getAvaliableGradebooks(){
     try {
       const response = await HTTP.get("/gradebooks/avaliable");
