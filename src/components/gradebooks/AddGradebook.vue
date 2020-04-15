@@ -1,6 +1,7 @@
 <template>
   <div>
 
+    <!-- VALIDATION ERRORS-->
     <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
       {{ `${fieldName}: ${validationError[0]}` }}
     </div>

@@ -12,10 +12,8 @@ export default class AuthService {
       console.log(response, 'response');//ovde uhvatimo response, dobijamo token posle register
       window.localStorage.setItem('loginToken', response.data.token);
       this.setAxiosDefaultAuthorizationHeader();
-    }).catch(() => alert('invalid credentials from authservice'));//ako ima neki problem, catch se aktivira, pa odradimo alert
+    }).catch(() => alert('invalid credentials by vanja'));//ako ima neki problem, catch se aktivira, pa odradimo alert
   }
-  
-
   
   async login(email, password) {//ova metoda salje email i password prema api
     try {
@@ -31,7 +29,6 @@ export default class AuthService {
     }
   }
   
-
   setAxiosDefaultAuthorizationHeader() {
     const TOKEN = window.localStorage.getItem('loginToken');//take the token from local storage
     if (!TOKEN) {//if there is no token
@@ -45,13 +42,10 @@ export default class AuthService {
 
     window.localStorage.removeItem('loginToken');
     delete axios.defaults.headers.common['Authorization'];
-    
   }
 
   isAuthenticated() {
     return !!window.localStorage.getItem('loginToken');//!! je nacin da neku string vrednost prebacimo u boolean.
-  }
-}
-
+  }}
 export const authService = new AuthService();
 

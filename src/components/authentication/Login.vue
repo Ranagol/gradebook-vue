@@ -1,6 +1,16 @@
 <template>
   <form @submit.prevent="login">
+
     <h3>Login</h3>
+
+    <!-- VALIDATION ERRORS-->
+    <!-- <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
+      {{ `${fieldName}: ${validationError[0]}` }}
+    </div> -->
+    <div v-if="errors" class="alert alert-danger">
+      {{ errors }}
+    </div>
+
     <div class="form-group">
       <label for="email">Email</label>
       <input v-model="email" type="email" class="form-control" id="email">
@@ -23,6 +33,7 @@ export default {
     return {
       email: '',
       password: '',
+      errors: '',
     }
   },
   methods:{
@@ -31,8 +42,10 @@ export default {
       authService.login(this.email, this.password).then(()=>{
         this.$router.push('/');
       }).catch(() => alert('invalid credentials given during login process'));
+
     }
   }
+
 }
 </script>
 
