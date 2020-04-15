@@ -4,7 +4,11 @@
     <p>ShowGradebook</p>
 
     <div class="jumbotron">
-      <h3 class="display-6">Gradebook: {{ gradebook.name }}</h3>
+      <div class="d-flex flex-row justify-content-between">
+        <button @click="goToAddStudent" class="btn btn-success">Add new student</button>
+        <button @click="deleteGradebook(gradebook.id)" class="btn btn-danger">Delete gradebook</button>
+      </div>
+      <h3 class="display-6 top-margin" >Gradebook: {{ gradebook.name }}</h3>
 
       <div class="d-flex flex-row justify-content-between">
         <p class="lead">Professor: 
@@ -13,7 +17,6 @@
             {{gradebook.professor.last_name }}
           </router-link>
         </p>
-        <button @click="deleteGradebook(gradebook.id)" class="btn btn-danger">Delete gradebook</button>
       </div>
 
       <hr class="my-4">
@@ -71,8 +74,12 @@ export default {
 
     async deleteGradebook(id){
       await gradebookService.deleteGradebook(id);
-      console.log('Gredaebook deleted');
+      console.log('Gradebook deleted');
       this.$router.push('/');
+    },
+
+    goToAddStudent(){
+      this.$router.push(`/gradebooks/${this.gradebookId}/students/create`);
     }
   },
   computed: {
@@ -93,3 +100,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.top-margin{
+  margin-top: 30px;
+}
+</style>
