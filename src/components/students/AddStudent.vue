@@ -2,6 +2,10 @@
   <div>
     <h3>Add new student:</h3>
   <form @submit.prevent="onSubmit">
+
+    <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
+      {{ `${fieldName}: ${validationError[0]}` }}<!--fieldName = first_name. validationError[0] = the actual error. [0]=because sometimes there could be some not needed additional garbage, but under [0] is always the error message that we need. -->
+    </div>
   
     <!-- FIRST NAME -->
     <div class="form-group row">
@@ -12,7 +16,6 @@
             id="first_name"
             name="first_name"
             type="text"
-            required="required"
             class="form-control here"
             v-model="first_name"
           />
@@ -29,7 +32,6 @@
             id="last_name"
             name="last_name"
             type="text"
-            required="required"
             class="form-control here"
             v-model="last_name"
           />
@@ -46,7 +48,6 @@
             id="url_slika"
             name="url_slika"
             type="text"
-            required="required"
             class="form-control here"
             v-model="url_slika"
           />
@@ -77,6 +78,7 @@ export default {
       last_name:'',
       url_slika:'',
       gradebook_id: this.$route.params.id,
+      validationErrors: {},//the validation error will be an object
     }
   },
   methods: {
@@ -86,8 +88,22 @@ export default {
         last_name: this.last_name,
         url_slika: this.url_slika
       }
-      await studentService.createStudent(student, this.gradebook_id);
-      alert('Student created');
+      try {
+        await studentService.createStudent(student, this.gradebook_id);
+      } catch (error) {
+        console.dir(error);//this is just for us, to understand the error property structure
+        if (error.response) {//if there is an error response from api...
+          if (error.response.status === 422) {//...and it's status is 422
+            this.validationErrors = {};//empty the validationError
+            this.validationErrors = Object.assign({}, {}, error.response.data.errors);//We use Object.assign, because this way Vue can recognise that this object has changed, and will react. Object assign, please create an empty {}, merge the second empty {} with error.response.data.errors, put it into the first empty {}, and after this, put all this into this.validationErrors)
+          } else if (error.response.status === 400) {//in case if we expect from api an error with a different status than the previous 422 status
+            //do something...
+          }
+        } else {
+          console.dir(error);//this is for a case when we have an error not from the api, but from Vue...
+        }
+      }
+      
     }
   },
   
