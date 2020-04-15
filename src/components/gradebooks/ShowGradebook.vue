@@ -39,6 +39,13 @@
 
       <div>
         <h5>Add new comment:</h5>
+
+        <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
+          {{ `${fieldName}: ${validationError[0]}` }}
+        </div>
+
+
+
         <form @submit.prevent="createNewComment">
           <textarea class="form-control" name="content" v-model="content"  rows="3"></textarea>
           <button class="btn btn-warning " type="submit">Submit comment</button>
@@ -58,19 +65,38 @@ export default {
       gradebook: {},
       counter: 0,
       content: '',
-      gradebookId: this.$route.params.id
+      gradebookId: this.$route.params.id,
+      validationErrors: {},
       
     }
   },
   methods: {
+
     async createNewComment(){
       const comment = {
         content: this.content,
       }
-      const createdComment = await commentService.createComment(comment, this.gradebookId);
-      this.gradebook.comments.push(createdComment);
-      this.content = '';
+      try {
+        const response = await commentService.createComment(comment, this.gradebookId);
+        const createdComment = response.data;
+        this.gradebook.comments.push(createdComment);
+        this.content = '';
+      } catch (error) {
+        if (error.response) {
+          if (error.response.status === 422) {
+            this.validationErrors = {};
+            this.validationErrors = Object.assign({}, {}, error.response.data.errors);
+          } else {
+          console.dir(error);
+          }
+        }
+      }
     },
+
+
+
+
+
 
     async deleteGradebook(id){
       await gradebookService.deleteGradebook(id);

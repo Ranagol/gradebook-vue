@@ -1,6 +1,11 @@
 <template>
   <div>
   <form @submit.prevent="onSubmitProf">
+
+    <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
+      {{ `${fieldName}: ${validationError[0]}` }}
+    </div>
+    
     <p>AddProfessor</p>
     <!-- FIRST NAME -->
     <div class="form-group row">
@@ -11,7 +16,6 @@
             id="first_name"
             name="first_name"
             type="text"
-            required="required"
             class="form-control here"
             v-model="first_name"
           />
@@ -28,7 +32,6 @@
             id="last_name"
             name="last_name"
             type="text"
-            required="required"
             class="form-control here"
             v-model="last_name"
           />
@@ -88,6 +91,7 @@ export default {
       pictureUrlCount: 0,
       availableGradebooks: [],
       gradebook_id:'',
+      validationErrors: {},
     }
   },
   methods: {
@@ -98,9 +102,25 @@ export default {
         picture_urls: this.picture_urls,
         gradebook_id: this.gradebook_id,
       }
-      await professorService.createProfessor(bodyProf);
-      console.log('Uspesno kreiran professor i professor picture');
-      this.$router.push('/professors');
+      try {
+        await professorService.createProfessor(bodyProf);
+        console.log('Uspesno kreiran professor i professor picture');
+        this.$router.push('/professors');
+      } catch (error) {
+        if (error.response) {
+          if (error.response.status === 422) {
+            this.validationErrors = {};
+            this.validationErrors = Object.assign({}, {}, error.response.data.errors);
+          } else {
+          console.dir(error);
+          }
+        }
+      }
+
+
+
+
+      
     },
     addImageUrl() {
       this.picture_urls.push(
@@ -117,9 +137,6 @@ export default {
   },
   async created(){
     this.availableGradebooks = await gradebookService.getAvaliableGradebooks();
-    console.dir(this.availableGradebooks);
-   
-    //mikor professort krealok es gradebookot akarok hozzacsatolni, akkor a gradebookban nem jelenik meg a professor_id
   }
   
   

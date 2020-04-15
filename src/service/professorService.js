@@ -27,14 +27,9 @@ class ProfessorService {
     }
   }
 
-  async createProfessor(professor){
-    try {
-      await HTTP.post('/professors', professor);
-    } catch (error) {
-      console.log('Error with professor creating');
-      console.dir(error);
-    }
-  }
+  createProfessor(professor){
+    return HTTP.post('/professors', professor);
+  }  
 
   async getAvaliableProfessors(){
     try {

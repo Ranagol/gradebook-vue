@@ -1,5 +1,10 @@
 <template>
   <div>
+
+    <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
+      {{ `${fieldName}: ${validationError[0]}` }}
+    </div>
+
   <form @submit.prevent="onSubmit">
     <p>AddGradebook</p>
     <div class="form-group row">
@@ -10,7 +15,6 @@
             id="name"
             name="name"
             type="text"
-            required="required"
             class="form-control here"
             v-model="name"
           />
@@ -51,6 +55,7 @@ export default {
       name:'',
       professor_id:'',
       availableProfessors: [],
+      validationErrors: {},
     }
   },
   methods: {
@@ -59,10 +64,20 @@ export default {
         name: this.name,
         professor_id: this.professor_id,
       }
-      await gradebookService.createGradebook(gradebook);
-      console.log('Uspesno kreiran gradebook');
-      this.$router.push('/');
-
+      try {
+        await gradebookService.createGradebook(gradebook);
+        this.$router.push('/');
+      } catch (error) {
+        console.dir(error);
+        if (error.response) {
+          if (error.response.status === 422) {
+            this.validationErrors = {};
+            this.validationErrors = Object.assign({}, {}, error.response.data.errors);
+          } 
+        } else {
+          console.dir(error);
+        }
+      }
     }
   },
   async created(){
