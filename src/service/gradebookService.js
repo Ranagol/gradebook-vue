@@ -20,7 +20,7 @@ class GradebookService {
   async getMyGradebook(){
     try {
       const response = await HTTP.get("/my-gradebook");
-      return response.data;
+      return response.data || {};
     } catch (error) {
       console.dir(error);
     }

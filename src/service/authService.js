@@ -1,13 +1,8 @@
-import axios from 'axios';
+import BaseService from './baseService';
 
-export default class AuthService {
-  constructor() {//this is a must. This will set up automatically the token into the request header.
-    axios.defaults.baseURL = 'http://localhost:8000/api/';
-    this.setAxiosDefaultAuthorizationHeader();//set the token in the header of our requests
-  }
-
+export default class AuthService extends BaseService {
   register(first_name, last_name, email, password, password_confirmation){
-    return axios.post('register', { first_name, last_name, email, password, password_confirmation})
+    return this.axios.post('register', { first_name, last_name, email, password, password_confirmation})
     .then(response => {
       console.log(response, 'response');//ovde uhvatimo response, dobijamo token posle register
       window.localStorage.setItem('loginToken', response.data.token);
@@ -15,33 +10,40 @@ export default class AuthService {
     }).catch(() => alert('invalid credentials by vanja'));//ako ima neki problem, catch se aktivira, pa odradimo alert
   }
   
-  async login(email, password) {//ova metoda salje email i password prema api
-    try {
-      const response = await axios.post('login', { email, password });
-      console.log(response.data.token);
-      window.localStorage.setItem('loginToken', response.data.token);//Dobijeni odgovor se stavlja u local storage, ovde cuvamo dobijeni token, under key 'loginToken'. Local storage ime getItem i setItem metode za namestanje ili dobijanje tokena.
+  login(email, password) {
+    // try {
+    //   const response = await this.axios.post('login', { email, password });
+    //   console.log(response.data.token);
+    //   window.localStorage.setItem('loginToken', response.data.token);
+    //   this.setAxiosDefaultAuthorizationHeader();
 
-      console.log('We received a token from API, and put it into localStorage', window.localStorage.loginToken);
-      this.setAxiosDefaultAuthorizationHeader();//U axiuosu se mogu postaviti headeri, koji se salju sa svakim requestom, i u ovaj header stavljamo dobijeni token od jwt
+    // } catch (error) {
+    //   console.log('Error from login authService', error.response.data.error);
+    // }
 
-    } catch (error) {
-      console.log('Error from login authService', error.response.data.error);
-    }
+    return new Promise((resolve, reject) => {
+      this.axios.post('login', { email, password })
+        .then((response) => {
+          console.log(response.data.token);
+          window.localStorage.setItem('loginToken', response.data.token);
+          this.setAxiosDefaultAuthorizationHeader();
+          resolve(response.data.token);
+        }).
+        catch ((error) => {
+          console.log('Error from login authService', error.response.data.error);
+          reject(error);
+        })
+    });
+
   }
   
-  setAxiosDefaultAuthorizationHeader() {
-    const TOKEN = window.localStorage.getItem('loginToken');//take the token from local storage
-    if (!TOKEN) {//if there is no token
-      return;//...just return, without token. No token = user not authorized = can't use this Vue
-    }
-    axios.defaults.headers.common['Authorization'] = `Bearer ${TOKEN}`;//here we put the received token from Laravel into our request header
-  }
+
 
   logout() {
     //Dokle god user ima token, server ga prepoznaje. Kada zelimo logout, onda treba da obrisemo token iz localstorage, i treba da izbrisemo is axios headera. Sustina je da token saljemo tokom svakog requesta. local storage: ako je token u ls, onda je user loginovan.
 
     window.localStorage.removeItem('loginToken');
-    delete axios.defaults.headers.common['Authorization'];
+    delete this.axios.defaults.headers.common['Authorization'];
   }
 
   isAuthenticated() {

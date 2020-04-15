@@ -39,13 +39,20 @@ export default {
   methods:{
     login(){
       console.log(this.email, this.password);
-      authService.login(this.email, this.password).then(()=>{
+      authService.login(this.email, this.password)
+      .then(() => {
         this.$router.push('/');
-      }).catch(() => alert('invalid credentials given during login process'));
-
+      })
+      .catch((error) => {
+        console.dir(error);
+        if (error.response && error.response.status === 400) {
+          this.errors = error.response.data.error;
+        } else {
+          console.dir(error);
+        }
+      });
     }
   }
 
 }
 </script>
-

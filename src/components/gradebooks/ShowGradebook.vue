@@ -12,9 +12,9 @@
 
       <div class="d-flex flex-row justify-content-between">
         <p class="lead">Professor: 
-          <router-link :to="`/professors/${gradebook.professor.id}`" class="link">
-            {{ gradebook.professor.first_name }} 
-            {{gradebook.professor.last_name }}
+          <router-link :to="`/professors/${professor.id}`" class="link">
+            {{ professor.first_name }} 
+            {{ professor.last_name }}
           </router-link>
         </p>
       </div>
@@ -65,7 +65,7 @@ export default {
       gradebook: {},
       counter: 0,
       content: '',
-      gradebookId: this.$route.params.id,
+      gradebookId: this.$route.params.id || 0,
       validationErrors: {},
       
     }
@@ -112,6 +112,10 @@ export default {
     comments(){
       const comments = this.gradebook.comments;
       return comments;
+    },
+    professor() {
+      const professor = this.gradebook.professor || {};
+      return professor;
     }
   },
   async created(){
