@@ -10,7 +10,8 @@
       </div>
       <h3 class="display-6 top-margin" >Gradebook: {{ gradebook.name }}</h3>
 
-      <div class="d-flex flex-row justify-content-between">
+      <!-- Professor displaying -->
+      <div v-if="professor !==undefined && professor !==null ">
         <p class="lead">Professor: 
           <router-link :to="`/professors/${professor.id}`" class="link">
             {{ professor.first_name }} 
@@ -18,16 +19,26 @@
           </router-link>
         </p>
       </div>
+      <div v-else>
+        <p>This gradebook currently does not have a professor.</p>
+      </div>
 
       <hr class="my-4">
+
+      <!-- Student displaying -->
       <h5>Student list:</h5>
-      <ol>
-        <li v-for="student in gradebook.students" :key="student.id">{{ student.first_name }} {{ student.last_name }}</li>
-      </ol>
+      <div v-if="gradebook.students !== undefined && gradebook.students.length > 0">
+        <ol>
+          <li v-for="student in gradebook.students" :key="student.id">{{ student.first_name }} {{ student.last_name }}</li>
+        </ol>
+      </div>
+      <div v-else>
+        <p>This gradebook has no students yet.</p>
+      </div>
+      
 
       <!-- Comment displaying -->
       <h5>Comments</h5>
-      {{ comments }}
       <div v-if="comments !== undefined && comments.length > 0"><!-- if there are comments, then show them... -->
         <ul>
           <li v-for="comment in comments" :key="comment.id">
@@ -102,11 +113,6 @@ export default {
         }
       }
     },
-
-
-
-
-
 
     async deleteGradebook(id){
       await gradebookService.deleteGradebook(id);
