@@ -124,9 +124,12 @@ export default {
     },
 
     async deleteGradebook(id){
-      await gradebookService.deleteGradebook(id);
-      console.log('Gradebook deleted');
-      this.$router.push('/');
+      if (confirm('Are you sure that you want to delete this gradebook?')) {
+        await gradebookService.deleteGradebook(id);
+        console.log('Gradebook deleted');
+        this.$router.push('/');
+      }
+      
     },
 
     goToAddStudent(){
