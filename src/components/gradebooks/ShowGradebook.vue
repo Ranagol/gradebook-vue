@@ -53,7 +53,7 @@
             {{comment.content}}
 
             <!-- Comment deleting part -->
-            <div class="d-flex flex-row justifiy-content-start bottom-margin" v-if="isAuthor">
+            <div class="d-flex flex-row justifiy-content-start bottom-margin" v-if="canUserDeleteComment(comment.user_id)">
               <button @click="deleteComment(comment.id, index)" class="btn btn-danger">Delete comment</button>
             </div>
 
@@ -96,7 +96,6 @@ export default {
       gradebookId: this.$route.params.id || 0,
       validationErrors: {},
       commentCreated: false,
-      isAuthor: true,//temporary
       loading: false
     }
   },
@@ -135,9 +134,26 @@ export default {
     },
 
     async deleteComment(id, index){
-      await commentService.deleteComment(id);//TODO --ITT HAGYTAM ABBA
-      this.comments.splice(index, 1);
+      if (confirm('Are you sure that you want to delete this commet?')) {
+        try {
+          await commentService.deleteComment(id);
+          this.comments.splice(index, 1);
+        } catch (error) {
+          alert(error.response.data.message);
+        }
+      }
+    },
+
+    canUserDeleteComment(commentAuthorId){
+      const currentUserId = window.localStorage.getItem('user_id');
+      if (currentUserId == commentAuthorId) {
+        return true
+      } else {
+        return false
+      }
     }
+
+    
   },
   computed: {
     comments(){
@@ -160,7 +176,6 @@ export default {
     }
     this.loading = false;
     console.dir(this.gradebook);
-    
   }
 }
 </script>
