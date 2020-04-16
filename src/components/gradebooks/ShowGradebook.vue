@@ -11,7 +11,7 @@
       <h3 class="display-6 top-margin" >Gradebook: {{ gradebook.name }}</h3>
 
       <!-- Professor displaying -->
-      <div v-if="professor !==undefined && professor !==null ">
+      <div v-if="gradebook.professor !==undefined && gradebook.professor !==null ">
         <p class="lead">Professor: 
           <router-link :to="`/professors/${professor.id}`" class="link">
             {{ professor.first_name }} 
