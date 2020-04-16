@@ -90,6 +90,7 @@ export default {
       }
       try {
         await studentService.createStudent(student, this.gradebook_id);
+        //HERE WE WILL NEED A REDIRECT EITHER TO MY-GRADEBOOK OR GRADEBOOKS/:ID
       } catch (error) {
         console.dir(error);//this is just for us, to understand the error property structure
         if (error.response) {//if there is an error response from api...

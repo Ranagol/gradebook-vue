@@ -25,28 +25,36 @@
         <li v-for="student in gradebook.students" :key="student.id">{{ student.first_name }} {{ student.last_name }}</li>
       </ol>
 
+      <!-- Comment displaying -->
       <h5>Comments</h5>
-      <ul>
-        <li v-for="comment in comments" :key="comment.id">
-          <strong>
-            {{ comment.user.first_name }} 
-            {{ comment.user.last_name }} 
-          </strong>
-          commented: 
-          {{comment.content}}
-        </li>
-      </ul>
-
-      <div>
+      {{ comments }}
+      <div v-if="comments !== undefined && comments.length > 0"><!-- if there are comments, then show them... -->
+        <ul>
+          <li v-for="comment in comments" :key="comment.id">
+            <strong>
+              {{ comment.user.first_name }} 
+              {{ comment.user.last_name }} 
+            </strong>
+            commented: 
+            {{comment.content}}
+          </li>
+        </ul>
+      </div>
+      <div v-else><!-- ...but if there are no comments, then show this: -->
+        <p>No comments yet. Add a comment!</p>
+      </div>
+      
+      <!-- Comment creating -->
+      <div v-if="!commentCreated">
         <h5>Add new comment:</h5>
 
+        <!-- Comment error displaying -->
         <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
           {{ `${fieldName}: ${validationError[0]}` }}
         </div>
 
-
-
-        <form @submit.prevent="createNewComment">
+        <!-- Comment creating -->
+        <form  @submit.prevent="createNewComment">
           <textarea class="form-control" name="content" v-model="content"  rows="3"></textarea>
           <button class="btn btn-warning " type="submit">Submit comment</button>
         </form>
@@ -67,6 +75,7 @@ export default {
       content: '',
       gradebookId: this.$route.params.id || 0,
       validationErrors: {},
+      commentCreated: false,
       
     }
   },
@@ -81,6 +90,7 @@ export default {
         const createdComment = response.data;
         this.gradebook.comments.push(createdComment);
         this.content = '';
+        this.commentCreated = true;
       } catch (error) {
         if (error.response) {
           if (error.response.status === 422) {
@@ -111,10 +121,10 @@ export default {
   computed: {
     comments(){
       const comments = this.gradebook.comments;
-      return comments;
+      return comments;//TODO LOSI- EZ ITT CSAK KERDES: EZ MIERT KELL????
     },
     professor() {
-      const professor = this.gradebook.professor || {};
+      const professor = this.gradebook.professor || {};//TODO LOSI- EZ ITT CSAK KERDES: EZZEL AZ URES {} AZT ERJUK EL, HOGY NEM HUJUL BE A VUE HA NINCS PROFESSOR OBJECT LEKULDVE AZ APIBOL???
       return professor;
     }
   },

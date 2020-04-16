@@ -53,6 +53,7 @@
     <button class="btn btn-success" @click="addImageUrl">Add Image URL</button>
     <div class="form-group row">
       <picture-url-input 
+        required
         v-for="(picture_url, index) in picture_urls"
         :key="`picture-url-input-${picture_urls[index].index}`"
         v-model="picture_urls[index].url"
@@ -96,6 +97,10 @@ export default {
   },
   methods: {
     async onSubmitProf(){
+      if (this.picture_urls.length == 0) {
+        alert('Neophodno je dodati barem jednu sliku.');
+        return;
+      }
       const bodyProf = {
         first_name: this.first_name,
         last_name: this.last_name,
@@ -116,11 +121,6 @@ export default {
           }
         }
       }
-
-
-
-
-      
     },
     addImageUrl() {
       this.picture_urls.push(
