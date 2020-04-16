@@ -1,6 +1,10 @@
 <template>
   <div class="card card-width border border-success ">
-    <img class="card-img-top" :src="firstPicture.picture_url" alt="Card image cap">
+    <div>
+      <!-- TODO LOSI - ide szeretnek tenni v-if/v-else, ha van kep link vagy nincs. Lehetseges? -->
+      <img class="card-img-top" :src="firstPicture.picture_url" alt="Card image cap">
+    </div>
+    
     <div class="card-body">
       <h5 class="card-title"></h5>
       <h5 class="card-title">
@@ -8,7 +12,14 @@
           Professor: {{ professor.first_name }} {{ professor.last_name }}
         </router-link>
       </h5>
-      <p class="card-text">Gradebook: <router-link :to="`/gradebooks/${gradebook.id}`" class="link">{{ gradebook.name }}</router-link></p>
+
+      <!-- Gradebook conditional diplaying -->
+      <div v-if="professor.gradebook !== undefined && professor.gradebook !== null">
+        <p class="card-text">Gradebook: <router-link :to="`/gradebooks/${gradebook.id}`" class="link">{{ gradebook.name }}</router-link></p>
+      </div>
+      <div v-else>
+        <p>This professor does not have a gradebook.</p>
+      </div>
     </div>
   </div>
 </template>
