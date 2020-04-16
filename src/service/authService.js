@@ -20,6 +20,7 @@ export default class AuthService extends BaseService {
       .then((response) => {
         console.log(response, 'response');//ovde uhvatimo response, dobijamo token posle register
         window.localStorage.setItem('loginToken', response.data.token);
+        window.localStorage.setItem('user_id', response.data.userId);
         this.setAxiosDefaultAuthorizationHeader();
         resolve(response.data.token);//this is sent to try on the calling functions
       }).
@@ -36,6 +37,7 @@ export default class AuthService extends BaseService {
       this.axios.post('login', { email, password })
         .then((response) => {
           console.log(response.data.token);
+          window.localStorage.setItem('user_id', response.data.userId);
           window.localStorage.setItem('loginToken', response.data.token);
           this.setAxiosDefaultAuthorizationHeader();
           resolve(response.data.token);
@@ -51,6 +53,7 @@ export default class AuthService extends BaseService {
 
   logout() {
     window.localStorage.removeItem('loginToken');
+    window.localStorage.removeItem('user_id');
     delete this.axios.defaults.headers.common['Authorization'];
   }
 

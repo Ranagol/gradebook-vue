@@ -1,7 +1,7 @@
 <template>
   <div class="card card-width border border-success ">
     <div>
-      <!-- TODO LOSI - ide szeretnek tenni v-if/v-else, ha van kep link vagy nincs. Lehetseges? -->
+   
       <img class="card-img-top" :src="firstPicture.picture_url" alt="Card image cap">
     </div>
     

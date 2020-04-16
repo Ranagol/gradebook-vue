@@ -8,6 +8,9 @@
         <button @click="goToAddStudent" class="btn btn-success">Add new student</button>
         <button @click="deleteGradebook(gradebook.id)" class="btn btn-danger">Delete gradebook</button>
       </div>
+
+      <div v-if="loading">Loading.....</div>
+     
       <h3 class="display-6 top-margin" >Gradebook: {{ gradebook.name }}</h3>
 
       <!-- Professor displaying -->
@@ -41,13 +44,19 @@
       <h5>Comments</h5>
       <div v-if="comments !== undefined && comments.length > 0"><!-- if there are comments, then show them... -->
         <ul>
-          <li v-for="comment in comments" :key="comment.id">
+          <li v-for="(comment, index) in comments" :key="comment.id">
             <strong>
               {{ comment.user.first_name }} 
               {{ comment.user.last_name }} 
             </strong>
             commented: 
             {{comment.content}}
+
+            <!-- Comment deleting part -->
+            <div class="d-flex flex-row justifiy-content-start bottom-margin" v-if="isAuthor">
+              <button @click="deleteComment(comment.id, index)" class="btn btn-danger">Delete comment</button>
+            </div>
+
           </li>
         </ul>
       </div>
@@ -87,7 +96,8 @@ export default {
       gradebookId: this.$route.params.id || 0,
       validationErrors: {},
       commentCreated: false,
-      
+      isAuthor: true,//temporary
+      loading: false
     }
   },
   methods: {
@@ -108,7 +118,7 @@ export default {
             this.validationErrors = {};
             this.validationErrors = Object.assign({}, {}, error.response.data.errors);
           } else {
-          console.dir(error);
+            console.dir(error);
           }
         }
       }
@@ -122,25 +132,33 @@ export default {
 
     goToAddStudent(){
       this.$router.push(`/gradebooks/${this.gradebookId}/students/create`);
+    },
+
+    async deleteComment(id, index){
+      await commentService.deleteComment(id);//TODO --ITT HAGYTAM ABBA
+      this.comments.splice(index, 1);
     }
   },
   computed: {
     comments(){
-      const comments = this.gradebook.comments;
-      return comments;//TODO LOSI- EZ ITT CSAK KERDES: EZ MIERT KELL????
+      const comments = this.gradebook.comments || [];
+      return comments;
     },
     professor() {
-      const professor = this.gradebook.professor || {};//TODO LOSI- EZ ITT CSAK KERDES: EZZEL AZ URES {} AZT ERJUK EL, HOGY NEM HUJUL BE A VUE HA NINCS PROFESSOR OBJECT LEKULDVE AZ APIBOL???
+      const professor = this.gradebook.professor || {};
       return professor;
     }
   },
   async created(){
+    this.loading = true;
     console.dir(this.$route.path);
     if (this.$route.path == '/my-gradebook') {
       this.gradebook = await gradebookService.getMyGradebook();
+      this.gradebookId = this.gradebook.id;
     } else {
       this.gradebook = await gradebookService.getGradebookById(this.gradebookId);
     }
+    this.loading = false;
     console.dir(this.gradebook);
     
   }
@@ -150,5 +168,9 @@ export default {
 <style scoped>
 .top-margin{
   margin-top: 30px;
+}
+
+.bottom-margin{
+  margin-bottom: 20px;
 }
 </style>

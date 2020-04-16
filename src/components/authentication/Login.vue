@@ -11,6 +11,10 @@
       {{ errors }}
     </div>
 
+    <h3 v-if="loading">
+      Loading...
+    </h3>
+
     <div class="form-group">
       <label for="email">Email</label>
       <input v-model="email" type="email" class="form-control" id="email">
@@ -34,14 +38,17 @@ export default {
       email: '',
       password: '',
       errors: '',
+      loading: false,
     }
   },
   methods:{
     login(){
+      this.loading = true;
       console.log(this.email, this.password);
       authService.login(this.email, this.password)
       .then(() => {
         this.$router.push('/');
+        this.loading = false;
       })
       .catch((error) => {
         console.dir(error);
@@ -50,6 +57,7 @@ export default {
         } else {
           console.dir(error);
         }
+        this.loading = false;
       });
     }
   }

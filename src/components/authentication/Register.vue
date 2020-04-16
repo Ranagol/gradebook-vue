@@ -2,16 +2,12 @@
   <form @submit.prevent="register">
     <h3>Register</h3>
 
-    <!-- LSOI ORIGINAL REGISTER DATA DISPLAYING -->
-    <!-- <div v-if="errors" class="alert alert-danger">
-      {{ errors }}
-    </div> -->
+   
 
-    {{ validationErrors }}
+   
     <!-- VALIDATION ERRORS-->
     <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
       {{ `${fieldName}: ${validationError[0]}` }}
-      <!-- //TODO - LOSI registering validation error display not working fully something is wrong with the iteration. This cant work with string as with login. Also, should not the login have a an email is reqired tyoe of validation error, and not just "invalid credentials?" -->
     </div>
 
 
@@ -65,7 +61,7 @@ export default {
       email: '',
       password: '',
       password_confirmation: '',
-      validationErrors: '',
+      validationErrors: {},
     }
   },
   methods: {
@@ -89,9 +85,9 @@ export default {
       })
       .catch((error) => {
         console.dir(error);
-        if (error.response && error.response.status === 400) {
+        if (error.response && error.response.status === 422) {
           console.log('THIS IS THE ERROR FROM REGISTER PAGE CATCH');
-          this.validationErrors = error.response.data;
+          this.validationErrors = Object.assign({}, {}, error.response.data.errors);
         } else {
           console.dir(error);
         }
