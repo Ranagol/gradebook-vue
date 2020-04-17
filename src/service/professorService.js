@@ -2,9 +2,14 @@ import { HTTP } from './baseService';
 
 class ProfessorService {
 
-  async getAllProfessors(){
-    const response = await HTTP.get("/professors");
-    return response.data;
+  async getAllProfessors(searchTerm = ''){
+    if (searchTerm.length > 0) {
+      const response = await HTTP.get("/professors", {params: {searchTerm: searchTerm}});
+      return response.data;
+    } else {
+      const response = await HTTP.get("/professors");
+      return response.data;
+    }
   }
 
 
