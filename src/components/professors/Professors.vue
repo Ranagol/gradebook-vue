@@ -7,6 +7,11 @@
       <h5>There is no data.</h5>
     </div>
 
+    <!-- Loading displaying -->
+    <h3 v-if="loading" class="alert alert-warning">
+      Loading...
+    </h3>
+
     <div class="d-flex flex-row flex-wrap">
       <app-card-professor v-for="professor in professors" :key="professor.id" :professor='professor'></app-card-professor>
     </div>
@@ -17,26 +22,29 @@
 
 <script>
 import CardProfessor from './CardProfessor';
-import { mapGetters, mapActions } from 'vuex';
+import professorService from '../../service/professorService';
 export default {
   name: 'Professors',
-
-  computed: {
-    ...mapGetters(['professors']),
+  data(){
+    return {
+      loading: false,
+      professors: [],
+    }
   },
-  methods: {
-    ...mapActions(['getAllProfessors']),
-  },
+  
   components: {
     'app-card-professor': CardProfessor,
   },
-  beforeRouteEnter(to, from, next){//here we use beforeRouteEnter to trigger, start the movie-getting-process
-    console.log(`beforeRouteEnter data fetching activated. From: ${from.path} to: ${to.path}`);
-    next(vm => {
-      vm.getAllProfessors()//beforeRouteEnter has no accces to this
-      console.log('beforeRouteEnter has finished its job, professors are here.');
-    })
-  },
+  async created(){
+    try {
+      this.loading = true;
+      this.professors = await professorService.getAllProfessors();
+      this.loading = false;
+    } catch (error) {
+      console.log('Error from professorSErvice/getAllProfessors');
+    }
+    
+  }
 
   
 

@@ -1,7 +1,9 @@
 export default {
+  /*
   getAllGradebooks(state, gradebooks){
     state.gradebooks = gradebooks;
   },
+  
 
   setGradebook(state, gradebook){
     state.gradebook = gradebook;
@@ -14,6 +16,7 @@ export default {
   setProfessor(state, professor){
     state.professor = professor;
   },
+  */
 
   setLoggedIn(state){//activated from Login or Register
     state.isLoggedIn = true;

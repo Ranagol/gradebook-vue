@@ -24,35 +24,30 @@
 
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import gradebookService from '../../service/gradebookService';
 import CardGradebook from './CardGradebook';
 export default {
   name: 'Gradebooks',
   data(){
     return {
       loading: false,
+      gradebooks: [],
     }
   },
   components: {
     'app-cardgradebook': CardGradebook,
   },
-  computed: {
-    ...mapGetters(['gradebooks']),
-  },
-  methods: {
-    ...mapActions(['getAllGradebooks']),
-  },
-  beforeRouteEnter(to, from, next){//here we use beforeRouteEnter to trigger, start the movie-getting-process
+  
+  
+  async created(){
+    try {
+      this.loading = true;
+      this.gradebooks = await gradebookService.getAllGradebooks();
+      this.loading = false;
+    } catch (error) {
+      console.log('Error from gradebookSErvice/getAllGradebooks');
+    }
     
-   
-   
-    console.log('beforeRouteEnter data fetching activated.');
-    next(vm => {//TODO itt created hookra cserelni mindezt
-      vm.loading = true;
-      vm.getAllGradebooks()//beforeRouteEnter has no accces to this
-      console.log('beforeRouteEnter has finished its job, gradebooks are here.');
-      vm.loading = false;
-    })
   }
 }
 </script>
