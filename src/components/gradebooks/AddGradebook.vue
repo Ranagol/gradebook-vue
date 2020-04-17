@@ -5,6 +5,7 @@
     <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
       {{ `${fieldName}: ${validationError[0]}` }}
     </div>
+    
 
   <form @submit.prevent="onSubmit">
     <h3>Add new gradebook:</h3>
@@ -24,9 +25,14 @@
     </div>
     
     
-
+    
     <!-- SELECT PROFESSOR -->
-    <div class="form-group">
+
+    <!-- WHEN THERE ARE NO AVAILABLE PROFESSORS -->
+    <div v-if="!availableProfessors.length" class="alert alert-info">
+      <h5>Currently there are no available professors, that could be assigned to this gradebook.</h5>
+    </div>
+    <div v-if="availableProfessors.length" class="form-group">
       <label for="professor">Assign this gradebook to a professor:</label>
       <select class="form-control" v-model="professor_id" id="professor">
         <option selected value="">Do not assign</option>

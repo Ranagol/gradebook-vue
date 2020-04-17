@@ -39,14 +39,21 @@
       </div>
     </div>
 
+
     <!-- SELECT GRADEBOOK -->
-      <div class="form-group">
-        <label for="gradebook">Assign this professor to a gradebook:</label>
-        <select class="form-control" v-model="gradebook_id" id="gradebook">
-          <option selected value="">Do not assign</option>
-          <option v-for="gradebook in availableGradebooks" :key="gradebook.id" :value="gradebook.id">{{ gradebook.name }}</option> -->
-        </select>
-      </div>
+
+    <!-- WHEN THERE ARE NO AVAILABLE GRADEBOOKS -->
+    <div v-if="!availableGradebooks.length" class="alert alert-info">
+      <h5>Currently there are no available gradebooks, that could be assigned to this professor.</h5>
+    </div>
+
+    <div v-if="availableGradebooks.length" class="form-group">
+      <label for="gradebook">Assign this professor to a gradebook:</label>
+      <select class="form-control" v-model="gradebook_id" id="gradebook">
+        <option selected value="">Do not assign</option>
+        <option v-for="gradebook in availableGradebooks" :key="gradebook.id" :value="gradebook.id">{{ gradebook.name }}</option> -->
+      </select>
+    </div>
 
       
     <!-- PICTURE -->
