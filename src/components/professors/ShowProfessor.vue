@@ -1,6 +1,12 @@
 <template>
   <div>
     <p>ShowProfessor</p>
+
+    <!-- Loading displaying -->
+    <h3 v-if="loading" class="alert alert-warning">
+      Loading...
+    </h3>
+
     <div class="jumbotron">
       <h5 class="display-4">Professor: {{ professor.first_name }} {{ professor.last_name }}</h5>
 
@@ -37,6 +43,7 @@ export default {
   data(){
     return {
       professor: {},
+      loading: false,
     }
   },
   computed: {
@@ -46,7 +53,9 @@ export default {
   },
   
   async created(){
+    this.loading = true;
     this.professor = await professorService.getProfessorById(this.$route.params.id);
+    this.loading = false;
   }
   
 }

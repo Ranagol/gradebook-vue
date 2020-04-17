@@ -32,11 +32,7 @@ export default {
     })
   },
 
-  /*
-  created(){
-    this.getAllProfessors();
-  }
-  */
+  
 
 }
 </script>

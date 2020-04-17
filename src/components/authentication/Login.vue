@@ -2,16 +2,13 @@
   <form @submit.prevent="login">
 
     <h3>Login</h3>
-
-    <!-- VALIDATION ERRORS-->
-    <!-- <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
-      {{ `${fieldName}: ${validationError[0]}` }}
-    </div> -->
+    <!-- Error diplaying -->
     <div v-if="errors" class="alert alert-danger">
       {{ errors }}
     </div>
 
-    <h3 v-if="loading">
+    <!-- Loading displaying -->
+    <h3 v-if="loading" class="alert alert-warning">
       Loading...
     </h3>
 

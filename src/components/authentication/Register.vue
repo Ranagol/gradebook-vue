@@ -10,6 +10,11 @@
       {{ `${fieldName}: ${validationError[0]}` }}
     </div>
 
+    <!-- Loading displaying -->
+    <h3 v-if="loading" class="alert alert-warning">
+      Loading...
+    </h3>
+
 
 
     <div class="form-group">
@@ -62,26 +67,16 @@ export default {
       password: '',
       password_confirmation: '',
       validationErrors: {},
+      loading: false,
     }
   },
   methods: {
-    //OLD REGISTER FULLY WORKING
-    /*
-    async register(){
-      try {
-        await authService.register(this.first_name, this.last_name, this.email, this.password, this.password_confirmation);
-        this.$router.push('/');
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    */
-    //NEW REGISTER
     register(){
-   
+      this.loading = true;
       authService.register(this.first_name, this.last_name, this.email, this.password, this.password_confirmation)
       .then(() => {
         this.$router.push('/');
+        this.loading = false;
       })
       .catch((error) => {
         console.dir(error);
@@ -91,6 +86,7 @@ export default {
         } else {
           console.dir(error);
         }
+        this.loading = false;
       });
     }
   }

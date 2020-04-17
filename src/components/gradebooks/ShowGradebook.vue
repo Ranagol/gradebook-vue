@@ -10,7 +10,10 @@
         <button @click="deleteGradebook(gradebook.id)" class="btn btn-danger">Delete gradebook</button>
       </div>
 
-      <div v-if="loading">Loading.....</div>
+      <!-- Loading displaying -->
+      <h3 v-if="loading" class="alert alert-warning">
+        Loading...
+      </h3>
      
       <h3 class="display-6 top-margin" >Gradebook: {{ gradebook.name }}</h3>
 
@@ -97,7 +100,7 @@ export default {
       gradebookId: this.$route.params.id || 0,
       validationErrors: {},
       commentCreated: false,
-      loading: false
+      loading: false,
     }
   },
   methods: {
