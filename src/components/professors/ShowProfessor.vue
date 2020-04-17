@@ -24,7 +24,6 @@
       <div v-else>
         <p>Ovaj dnevnik trenutno nema studente.</p>
       </div>
-      {{ professor}}
       
     </div>
   </div>

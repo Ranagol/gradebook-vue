@@ -59,6 +59,7 @@ export default class AuthService extends BaseService {
 
   isAuthenticated() {
     return !!window.localStorage.getItem('loginToken');
-  }}
+  }
+}
 export const authService = new AuthService();
 

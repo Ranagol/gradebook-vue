@@ -7,7 +7,7 @@
     </div>
 
   <form @submit.prevent="onSubmit">
-    <p>AddGradebook</p>
+    <h3>Add new gradebook:</h3>
     <div class="form-group row">
       <label for="name" class="col-4 col-form-label">Gradebook name</label>
       <div class="col-8">

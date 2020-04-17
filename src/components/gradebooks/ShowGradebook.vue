@@ -6,6 +6,7 @@
     <div class="jumbotron">
       <div class="d-flex flex-row justify-content-between">
         <button @click="goToAddStudent" class="btn btn-success">Add new student</button>
+        <button @click="goToEditGradebook(gradebook.id)" class="btn btn-warning">Edit gradebook</button>
         <button @click="deleteGradebook(gradebook.id)" class="btn btn-danger">Delete gradebook</button>
       </div>
 
@@ -100,7 +101,6 @@ export default {
     }
   },
   methods: {
-
     async createNewComment(){
       const comment = {
         content: this.content,
@@ -134,6 +134,10 @@ export default {
 
     goToAddStudent(){
       this.$router.push(`/gradebooks/${this.gradebookId}/students/create`);
+    },
+
+    goToEditGradebook(gradebookId){
+      this.$router.push(`/gradebooks/${gradebookId}/edit`);
     },
 
     async deleteComment(id, index){

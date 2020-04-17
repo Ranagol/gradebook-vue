@@ -3,6 +3,7 @@ import Register from './components/authentication/Register';
 import Gradebooks from './components/gradebooks/Gradebooks';
 import ShowGradebook from './components/gradebooks/ShowGradebook';
 import AddGradebook from './components/gradebooks/AddGradebook';
+import EditGradebook from './components/gradebooks/EditGradebook';
 
 import Professors from './components/professors/Professors';
 import AddProfessor from './components/professors/AddProfessor';
@@ -20,7 +21,7 @@ export const routes = [
   { path: '/my-gradebook', name: 'MyGradebook', component: ShowGradebook },
   { path: '/gradebooks/create', name: 'AddGradebook', component: AddGradebook },//this must be before ShowGradebook!!
   { path: '/gradebooks/:id', name: 'ShowGradebook', component: ShowGradebook },
-  { path: '/gradebooks/:id/edit', name: 'EditGradebook', component: AddGradebook },
+  { path: '/gradebooks/:id/edit', name: 'EditGradebook', component: EditGradebook },
   
 
   { path: '/professors', name: 'professors', component: Professors },

@@ -79,6 +79,7 @@ export default {
       url_slika:'',
       gradebook_id: this.$route.params.id,
       validationErrors: {},//the validation error will be an object
+      goBackHere:'',
     }
   },
   methods: {
@@ -90,7 +91,7 @@ export default {
       }
       try {
         await studentService.createStudent(student, this.gradebook_id);
-        //HERE WE WILL NEED A REDIRECT EITHER TO MY-GRADEBOOK OR GRADEBOOKS/:ID
+        this.$router.push(this.goBackHere);
       } catch (error) {
         console.dir(error);//this is just for us, to understand the error property structure
         if (error.response) {//if there is an error response from api...
@@ -104,9 +105,16 @@ export default {
           console.dir(error);//this is for a case when we have an error not from the api, but from Vue...
         }
       }
-      
     }
   },
+  beforeRouteEnter (to, from, next) {
+    console.log(`Student create guard activated. From: ${from.path} to: ${to.path}`);
+    next((vm) => {
+      vm.goBackHere = from.path;
+      console.log('goBackHere value is now: ', vm.goBackHere);
+    })
+  }
+
   
 }
 </script>

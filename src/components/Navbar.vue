@@ -8,31 +8,31 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         
-        <li class="nav-item">
+        <li v class="nav-item">
           <router-link class="nav-link" to="/login" >Login</router-link>
         </li>
 
-        <li class="nav-item">
+        <li v  class="nav-item">
           <router-link class="nav-link" to="/register" >Register</router-link>
         </li>
 
-        <li class="nav-item">
+        <li   class="nav-item">
           <router-link class="nav-link" to="/professors" >All professors</router-link>
         </li>
 
-        <li class="nav-item">
+        <li   class="nav-item">
           <router-link class="nav-link" to="/my-gradebook" >My gradebook</router-link>
         </li>
 
-        <li class="nav-item">
+        <li  class="nav-item">
           <router-link class="nav-link" to="/gradebooks/create" >Add gradebook</router-link>
         </li>
 
-        <li class="nav-item">
+        <li  class="nav-item">
           <router-link class="nav-link" to="/professors/create" >Add professor</router-link>
         </li>
 
-        <li class="nav-item">
+        <li  class="nav-item">
           <a @click="logout" class="nav-link" >Logout</a>
         </li>
 
@@ -55,6 +55,16 @@ export default {
       authService.logout();
       this.$router.push('/login');
     }
+  },
+  //TODO LOSI -it works, but it is not reactive, every time it needs refresh
+  computed: {
+    ifLoggedIn(){
+      if (window.localStorage.getItem('loginToken')) {
+        return true;
+      }
+      return false;
+    }
   }
+  
 }
 </script>
