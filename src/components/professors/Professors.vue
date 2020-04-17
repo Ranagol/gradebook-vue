@@ -1,6 +1,12 @@
 <template>
   <div>
     <p>Professors</p>
+
+    <!-- If there is no data in the db... -->
+    <div v-if="!professors.length" class="alert alert-info">
+      <h5>There is no data in the db.</h5>
+    </div>
+
     <div class="d-flex flex-row flex-wrap">
       <app-card-professor v-for="professor in professors" :key="professor.id" :professor='professor'></app-card-professor>
     </div>

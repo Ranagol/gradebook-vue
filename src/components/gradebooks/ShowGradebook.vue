@@ -4,10 +4,15 @@
     <p>ShowGradebook</p>
 
     <div class="jumbotron">
-      <div class="d-flex flex-row justify-content-between">
+      <div v-if="!isEmptyObject(gradebook)" class="d-flex flex-row justify-content-between">
         <button @click="goToAddStudent" class="btn btn-success">Add new student</button>
         <button @click="goToEditGradebook(gradebook.id)" class="btn btn-warning">Edit gradebook</button>
         <button @click="deleteGradebook(gradebook.id)" class="btn btn-danger">Delete gradebook</button>
+      </div>
+
+      <!-- If there is no data in the db... -->
+      <div v-if="isEmptyObject(gradebook)" class="alert alert-info">
+        <h5>There is no data in the db.</h5>
       </div>
 
       <!-- Loading displaying -->
@@ -70,7 +75,7 @@
       
       <!-- Comment creating -->
       <div v-if="!commentCreated">
-        <h5>Add new comment:</h5>
+        <h5 v-if="!isEmptyObject(gradebook)" >Add new comment:</h5>
 
         <!-- Comment error displaying -->
         <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
@@ -78,7 +83,7 @@
         </div>
 
         <!-- Comment creating -->
-        <form  @submit.prevent="createNewComment">
+        <form v-if="!isEmptyObject(gradebook)" @submit.prevent="createNewComment">
           <textarea class="form-control" name="content" v-model="content"  rows="3"></textarea>
           <button class="btn btn-warning " type="submit">Submit comment</button>
         </form>
@@ -123,6 +128,14 @@ export default {
             console.dir(error);
           }
         }
+      }
+    },
+
+    isEmptyObject(gradebook){
+      if (Object.entries(gradebook).length === 0) {
+        return true;
+      } else {
+        return false;
       }
     },
 
