@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import { authService } from '../../service/authService';
 export default {
   name: 'Register',
@@ -71,12 +72,15 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['setLoggedIn']),
     register(){
       this.loading = true;
       authService.register(this.first_name, this.last_name, this.email, this.password, this.password_confirmation)
       .then(() => {
-        this.$router.push('/');
+        this.setLoggedIn();
         this.loading = false;
+        this.$router.push('/');
+        
       })
       .catch((error) => {
         console.dir(error);

@@ -22,4 +22,12 @@ export default {
     commit('setProfessor', professor);
   },
 
+  setLoggedIn({commit}){
+    commit('setLoggedIn');
+  },
+
+  setLoggedOut({commit}){
+    commit('setLoggedOut');
+  }
+
 }

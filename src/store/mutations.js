@@ -15,4 +15,12 @@ export default {
     state.professor = professor;
   },
 
+  setLoggedIn(state){//activated from Login or Register
+    state.isLoggedIn = true;
+  },
+
+  setLoggedOut(state){//activated from Logout
+    state.isLoggedIn = false;
+  }
+
 }

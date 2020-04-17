@@ -4,7 +4,7 @@
 
     <!-- If there is no data in the db... -->
     <div v-if="!gradebooks.length" class="alert alert-info">
-      <h5>There is no data in the db.</h5>
+      <h5>There is no data.</h5>
     </div>
 
     <!-- Loading displaying -->
@@ -45,9 +45,9 @@ export default {
   beforeRouteEnter(to, from, next){//here we use beforeRouteEnter to trigger, start the movie-getting-process
     
    
-    //TODO LOSI - filterezesi(search) es paginacios problematika: Laravelben csinalni vagy Vue. Meg: hogyan csinalni?
+   
     console.log('beforeRouteEnter data fetching activated.');
-    next(vm => {//TODO LOSI - hogyan lehetne megcsinalni a loading trukkot, mikor created hook helyett beforeRouteEntert hasznalok?? Ha megvan a valasz akkor a /professors is megcsinalni, ott is ugyanilyen a helyzet.
+    next(vm => {//TODO itt created hookra cserelni mindezt
       vm.loading = true;
       vm.getAllGradebooks()//beforeRouteEnter has no accces to this
       console.log('beforeRouteEnter has finished its job, gradebooks are here.');

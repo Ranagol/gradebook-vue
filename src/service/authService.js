@@ -1,27 +1,11 @@
 import BaseService from './baseService';
-
 export default class AuthService extends BaseService {
 
-  /* OLD REGISTER, FULLY FUNCTIONALY
-  register(first_name, last_name, email, password, password_confirmation){
-    return this.axios.post('register', { first_name, last_name, email, password, password_confirmation})
-    .then(response => {
-      console.log(response, 'response');//ovde uhvatimo response, dobijamo token posle register
-      window.localStorage.setItem('loginToken', response.data.token);
-      this.setAxiosDefaultAuthorizationHeader();
-    }).catch(() => alert('invalid credentials by vanja'));//ako ima neki problem, catch se aktivira, pa odradimo alert
-  }
-  */
-
-  //new register copied from losi login
   register(first_name, last_name, email, password, password_confirmation){
     return new Promise((resolve, reject) => {
       this.axios.post('register', { first_name, last_name, email, password, password_confirmation})
       .then((response) => {
-        console.log(response, 'response');//ovde uhvatimo response, dobijamo token posle register
-        window.localStorage.setItem('loginToken', response.data.token);
-        window.localStorage.setItem('user_id', response.data.userId);
-        this.setAxiosDefaultAuthorizationHeader();
+        this.localStorageSetUp(response);
         resolve(response.data.token);//this is sent to try on the calling functions
       }).
       catch((error) => {
@@ -36,10 +20,7 @@ export default class AuthService extends BaseService {
     return new Promise((resolve, reject) => {
       this.axios.post('login', { email, password })
         .then((response) => {
-          console.log(response.data.token);
-          window.localStorage.setItem('user_id', response.data.userId);
-          window.localStorage.setItem('loginToken', response.data.token);
-          this.setAxiosDefaultAuthorizationHeader();
+          this.localStorageSetUp(response);
           resolve(response.data.token);
         }).
         catch ((error) => {
@@ -48,7 +29,12 @@ export default class AuthService extends BaseService {
         })
     });
   }
-  
+
+  localStorageSetUp(response) {
+    window.localStorage.setItem('loginToken', response.data.token);
+    window.localStorage.setItem('user_id', response.data.userId);
+    this.setAxiosDefaultAuthorizationHeader();
+  }
 
 
   logout() {

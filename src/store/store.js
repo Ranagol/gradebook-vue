@@ -10,10 +10,11 @@ export const store = new Vuex.Store({
   
   getters,
   state: {
-    gradebooks: [],
-    gradebook: {},
+    gradebooks: [],//ezt alighanem ki lehet torolni
+    //gradebook: {},
     professors: [],
-    professor: {},
+    //professor: {},//ezt alighanem ki lehet torolni, es ha igen, akkor torolni mindent actions, mutations, getters
+    isLoggedIn: false,
     
   },
   mutations,

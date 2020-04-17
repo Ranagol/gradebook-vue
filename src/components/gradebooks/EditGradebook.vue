@@ -1,14 +1,15 @@
 <template>
   <div>
+    {{ gradebook }}
     <app-add-gradebook></app-add-gradebook>
     <app-add-student></app-add-student>
-
   </div>
 </template>
 
 <script>
 import AddGradebook from './AddGradebook';
 import AddStudent from '../students/AddStudent';
+import gradebookService from '../../service/gradebookService';
 export default {
   name: 'EditGradebook',
   components: {
@@ -18,6 +19,8 @@ export default {
   data(){
     return {
       goBackHere:'',
+      gradebook: {},
+      gradebookId: this.$route.params.id || 0,
     }
   },
   methods: {
@@ -31,6 +34,16 @@ export default {
       vm.goBackHere = from.path;
       console.log('goBackHere value is now: ', vm.goBackHere);
     })
+  },
+  async created(){
+    console.dir(this.$route.path);
+    if (this.goBackHere == '/my-gradebook') {
+      this.gradebook = await gradebookService.getMyGradebook();
+      this.gradebookId = this.gradebook.id;
+    } else {
+      this.gradebook = await gradebookService.getGradebookById(this.gradebookId);
+    }
+    console.dir(this.gradebook);
   }
 
 }

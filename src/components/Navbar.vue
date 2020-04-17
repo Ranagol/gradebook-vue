@@ -7,32 +7,16 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        
-        <li v class="nav-item">
-          <router-link class="nav-link" to="/login" >Login</router-link>
+
+        <!-- MENU -->
+        <li v-for="(menuItem, index) in menuItems" :key="menuItem.to + index" class="nav-item">
+          <router-link class="nav-link" :to="`/${menuItem.to}`" >
+            {{ menuItem.displayForUser }}
+          </router-link>
         </li>
 
-        <li v  class="nav-item">
-          <router-link class="nav-link" to="/register" >Register</router-link>
-        </li>
-
-        <li   class="nav-item">
-          <router-link class="nav-link" to="/professors" >All professors</router-link>
-        </li>
-
-        <li   class="nav-item">
-          <router-link class="nav-link" to="/my-gradebook" >My gradebook</router-link>
-        </li>
-
-        <li  class="nav-item">
-          <router-link class="nav-link" to="/gradebooks/create" >Add gradebook</router-link>
-        </li>
-
-        <li  class="nav-item">
-          <router-link class="nav-link" to="/professors/create" >Add professor</router-link>
-        </li>
-
-        <li  class="nav-item">
+        <!-- LOGOUT -->
+        <li v-if="isLoggedIn" class="nav-item">
           <a @click="logout" class="nav-link" >Logout</a>
         </li>
 
@@ -49,20 +33,59 @@
 
 <script>
 import { authService } from '../service/authService';
+import { mapGetters, mapActions } from 'vuex';
 export default {
-  methods: {
-    logout(){
-      authService.logout();
-      this.$router.push('/login');
+  name: "Navbar",
+  data() {
+    return {
+      loggedOutMenu: [
+        {
+          to: 'login',
+          displayForUser: 'Login'
+        },
+        {
+          to: 'register',
+          displayForUser: 'Register'
+        }
+      ],
+      loggedInMenu: [
+        {
+          to: 'professors',
+          displayForUser: 'All professors'
+        },
+        {
+          to: 'my-gradebook',
+          displayForUser: 'My gradebook'
+        },
+        {
+          to: 'gradebooks/create',
+          displayForUser: 'Add gradebook'
+        },
+        {
+          to: 'professors/create',
+          displayForUser: 'Add professor'
+        }
+      ]
     }
   },
-  //TODO LOSI -it works, but it is not reactive, every time it needs refresh
   computed: {
-    ifLoggedIn(){
-      if (window.localStorage.getItem('loginToken')) {
-        return true;
+    ...mapGetters(['isLoggedIn']),//this can be true or false
+
+    
+    menuItems() {
+      let result = this.loggedOutMenu;
+      if(this.isLoggedIn) {
+        result = this.loggedInMenu;
       }
-      return false;
+      return result;
+    }
+  },
+  methods: {
+    ...mapActions(['setLoggedOut']),
+    logout(){
+      authService.logout();
+      this.setLoggedOut();
+      this.$router.push('/login');
     }
   }
   

@@ -12,7 +12,7 @@
 
       <!-- If there is no data in the db... -->
       <div v-if="isEmptyObject(gradebook)" class="alert alert-info">
-        <h5>There is no data in the db.</h5>
+        <h5>There is no data.</h5>
       </div>
 
       <!-- Loading displaying -->

@@ -4,7 +4,7 @@
 
     <!-- If there is no data in the db... -->
     <div v-if="!professors.length" class="alert alert-info">
-      <h5>There is no data in the db.</h5>
+      <h5>There is no data.</h5>
     </div>
 
     <div class="d-flex flex-row flex-wrap">
