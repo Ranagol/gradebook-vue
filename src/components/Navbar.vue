@@ -78,11 +78,19 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setLoggedOut']),
+    ...mapActions(['setLoggedIn','setLoggedOut']),
     logout(){
       authService.logout();
       this.setLoggedOut();
       this.$router.push('/login');
+    }
+  },
+  created(){
+    // When refreshed, vuex will forget if the user is logged in. This is the solution.
+    if (window.localStorage.getItem('loginToken') !==null) {
+      this.setLoggedIn();
+    } else {
+      this.setLoggedOut();
     }
   }
   

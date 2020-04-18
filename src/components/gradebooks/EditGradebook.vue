@@ -19,7 +19,7 @@ export default {
   data(){
     return {
       goBackHere:'',
-      gradebook: {},
+      gradebook: {},//TODO LOSI -EZT UTOLJARA HAGYNI elolvastatni a Losival a feladatot, megkérezni, hogy ő ezt hogyan értelmezi, mit is kellene csinalni. És persze: hogyan. Lépésről lépésre.
       gradebookId: this.$route.params.id || 0,
     }
   },

@@ -1,6 +1,15 @@
 <template>
   <div>
-    <h3>Gradebooks</h3>
+
+    <div class="d-flex flex-row justify-content-between">
+      <h3>Gradebooks</h3>
+
+      <!-- SEARCH FIELD -->
+      <form @submit.prevent="searchProfessors" class="form-inline my-2 my-lg-0">
+        <input v-model="searchTerm" name="searchTerm" class="form-control" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
 
     <!-- If there is no data in the db... -->
     <div v-if="!gradebooks.length" class="alert alert-info">
@@ -32,6 +41,7 @@ export default {
     return {
       loading: false,
       gradebooks: [],
+      searchTerm:'',
     }
   },
   components: {

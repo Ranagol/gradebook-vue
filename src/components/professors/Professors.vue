@@ -59,7 +59,7 @@ export default {
   async created(){
     try {
       this.loading = true;
-      this.professors = await professorService.getAllProfessors();//TODO LOSI - HM KENE FAKTORIZALNI...
+      this.professors = await professorService.getAllProfessors();//TODO LOSI - HM KENE FAKTORIZALNI... Hogyan csinalni?
       this.loading = false;
     } catch (error) {
       console.log('Error from professorSErvice/getAllProfessors');
