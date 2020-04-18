@@ -8,37 +8,23 @@ class GradebookService {
     return response.data;
   }
 
-  getGradebookById(){
-    return HTTP.get(`/gradebooks/${3000}`);
-    //TODO --- EZ IT PROBLEMA, DIREKT A FUNKCIOT KELL REUTURNOLNI!!!!!!!
-
+  getGradebookById(id){
+    return HTTP.get(`/gradebooks/${id}`);
   }
 
-  async getMyGradebook(){
-    try {
-      const response = await HTTP.get("/my-gradebook");
-      return response.data || {};
-    } catch (error) {
-      console.dir(error);
-    }
+  getMyGradebook(){
+    return HTTP.get("/my-gradebook");
   }
-
-
 
   createGradebook(gradebook){
     return HTTP.post('/gradebooks', gradebook);
   }
 
-  async getAvaliableGradebooks(){
-    try {
-      const response = await HTTP.get("/available-gradebooks");
-      return response.data;
-    } catch (error) {
-      console.dir(error);
-    }
+  getAvaliableGradebooks(){
+    return HTTP.get("/available-gradebooks");
   }
 
-  deleteGradebook(id){//TODO tobbi deletet atjavitani ha van + losi hibakijezest mindehil megicsnalni
+  deleteGradebook(id){
     return HTTP.delete(`/gradebooks/${id}`);
   }
 

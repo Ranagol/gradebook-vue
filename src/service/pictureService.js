@@ -2,7 +2,6 @@ import { HTTP } from './baseService';
 
 class PictureService {
 
-  //TODO LOSI hogy lehet ezt leellenprizni biztonsagosan, hogy van-e hasznalva? Ha nincs, akkor torolni...
   async createPicture(body){
     try {
       await HTTP.post('/pictures', body);

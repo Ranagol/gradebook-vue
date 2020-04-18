@@ -3,6 +3,7 @@
     <div class="d-flex flex-row justify-content-between">
       <h3>Professors</h3>
 
+      <!-- TODO LOSI sorrend descending -->
       <!-- SEARCH FIELD -->
       <form @submit.prevent="searchProfessors" class="form-inline my-2 my-lg-0">
         <input v-model="searchTerm" name="searchTerm" class="form-control" type="search" placeholder="Search" aria-label="Search">

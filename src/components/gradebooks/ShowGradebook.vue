@@ -40,16 +40,7 @@
 
 
 
-      <!-- THIS WAS PERFECTLY WORKING!!!! -->
-      <!-- <h5>Student list:</h5>
-      <div v-if="gradebook.students !== undefined && gradebook.students.length > 0">
-        <ol>
-          <li v-for="student in gradebook.students" :key="student.id">{{ student.first_name }} {{ student.last_name }}</li>
-        </ol>
-      </div>
-      <div v-else>
-        <p>This gradebook has no students yet.</p>
-      </div> -->
+  
       
 
       <!-- Comment displaying -->
@@ -154,7 +145,7 @@ export default {
           this.$router.push('/');
         } catch (error) {
           console.dir(error);
-          alert(`There was an error during delete.\nError: ${error.response.data.message}`);//TODO fenszi losi hibakijezes
+          alert(`There was an error during delete.\nError: ${error.response.data.message}`);
         }
       }
     },
@@ -208,14 +199,20 @@ export default {
     this.loading = true;
     console.dir(this.$route.path);
     if (this.$route.path == '/my-gradebook') {
-      this.gradebook = await gradebookService.getMyGradebook();
-      this.gradebookId = this.gradebook.id;
-    } else {
       try {
+        this.gradebook = await gradebookService.getMyGradebook();
+        this.gradebookId = this.gradebook.id;
+      } catch (error) {
+        console.dir(error);
+        alert(`There was an error getting my-gradbook from db.\nError: ${error.response.data.message}`);
+      }
+    } else {
+      try {//TODO LOSI problema: nincs hibakijelzes, ha 3000 teszek be id helyett
         const response = await gradebookService.getGradebookById(this.gradebookId);
         this.gradebook = response.data;
-      } catch (error) {//TODO hibakijezest kimutatni alerttel!!!!
+      } catch (error) {
         console.dir(error);
+        alert(`There was an error getting the selected single-gradebook from db.\nError: ${error.response.data.message}`);
       }
     }
     this.loading = false;
