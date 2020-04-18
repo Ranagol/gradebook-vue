@@ -36,7 +36,12 @@
       <hr class="my-4">
 
       <!-- Student displaying -->
-      <h5>Student list:</h5>
+      <app-student-list :students = 'students' ></app-student-list>
+
+
+
+      <!-- THIS WAS PERFECTLY WORKING!!!! -->
+      <!-- <h5>Student list:</h5>
       <div v-if="gradebook.students !== undefined && gradebook.students.length > 0">
         <ol>
           <li v-for="student in gradebook.students" :key="student.id">{{ student.first_name }} {{ student.last_name }}</li>
@@ -44,7 +49,7 @@
       </div>
       <div v-else>
         <p>This gradebook has no students yet.</p>
-      </div>
+      </div> -->
       
 
       <!-- Comment displaying -->
@@ -93,8 +98,13 @@
 <script>
 import gradebookService from '../../service/gradebookService';
 import commentService from '../../service/commentService';
+import StudentList from '../students/StudentList';
 export default {
   name: 'ShowGradebook',
+  components: {
+    'app-student-list': StudentList
+  },
+
   data(){
     return {
       gradebook: {},
@@ -139,13 +149,12 @@ export default {
 
     async deleteGradebook(id){
       if (confirm('Are you sure that you want to delete this gradebook?')) {
-        //TODO LOSI most akkor nekem minden axiosos muveletet at kel csinalnom ugy, hogy az aktivalo reszen legyen a try catch, ne a szerviszben?
         try {
           await gradebookService.deleteGradebook(id);
           this.$router.push('/');
         } catch (error) {
-          console.dir(error);//TODO LOSI - Losi nezze meg, hogy a 3000-es teszteleskor ez igy elfogadahto-e
-          alert(error.response.data.message);
+          console.dir(error);
+          alert(`There was an error during delete.\nError: ${error.response.data.message}`);//TODO fenszi losi hibakijezes
         }
       }
     },
@@ -187,6 +196,10 @@ export default {
     professor() {
       const professor = this.gradebook.professor || {};
       return professor;
+    },
+    students(){
+      const students = this.gradebook.students || {};
+      return students;
     }
   },
 
@@ -201,7 +214,7 @@ export default {
       try {
         const response = await gradebookService.getGradebookById(this.gradebookId);
         this.gradebook = response.data;
-      } catch (error) {//TODO LOSI nem tudom hogy megfogni a hibat, es hogy kijelezni. Mikor hibas requestet generalok 3000-es id-vel, a valasz undefined
+      } catch (error) {//TODO hibakijezest kimutatni alerttel!!!!
         console.dir(error);
       }
     }

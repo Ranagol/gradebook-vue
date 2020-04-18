@@ -4,6 +4,8 @@
     <div class="d-flex flex-row justify-content-between">
       <h3>Gradebooks</h3>
 
+      <app-paginator ref="paginator" :disable="loading" @change-page="changePage" />
+
       <!-- SEARCH FIELD -->
       <form @submit.prevent="searchProfessors" class="form-inline my-2 my-lg-0">
         <input v-model="searchTerm" name="searchTerm" class="form-control" type="search" placeholder="Search" aria-label="Search">
@@ -29,6 +31,8 @@
         :gradebook="gradebook"
       />
     </div>
+
+
   </div>
 </template>
 
@@ -36,6 +40,7 @@
 <script>
 import gradebookService from '../../service/gradebookService';
 import CardGradebook from './CardGradebook';
+import Paginator from '../Paginator';
 export default {
   name: 'Gradebooks',
   data(){
@@ -43,20 +48,38 @@ export default {
       loading: false,
       gradebooks: [],
       searchTerm:'',
+      page: 1
     }
   },
   components: {
     'app-cardgradebook': CardGradebook,
+    'app-paginator': Paginator
   },
   
   
-  async created(){
-    try {
-      this.loading = true;
-      this.gradebooks = await gradebookService.getAllGradebooks();
-      this.loading = false;
-    } catch (error) {
-      console.dir(error);
+  created(){
+    this.getAllGradebooks();
+  },
+  watch: {
+    gradebooks: function(newVal) {
+      if (newVal.length === 0) {
+        this.$refs.paginator.$setLastPage(this.page - 1);
+      }
+    }
+  },
+  methods: {
+    async getAllGradebooks() {
+      try {
+        this.loading = true;
+        this.gradebooks = await gradebookService.getAllGradebooks(this.searchTerm, this.page);
+        this.loading = false;
+      } catch (error) {
+        console.dir(error);
+      }
+    },
+    changePage(page) {
+      this.page = page;
+      this.getAllGradebooks();
     }
   }
 }

@@ -24,6 +24,8 @@
     <div class="d-flex flex-row flex-wrap">
       <app-card-professor v-for="professor in professors" :key="professor.id" :professor='professor'></app-card-professor>
     </div>
+
+    
     
   </div>
 </template>
@@ -32,8 +34,13 @@
 <script>
 import CardProfessor from './CardProfessor';
 import professorService from '../../service/professorService';
+
 export default {
   name: 'Professors',
+  components: {
+    'app-card-professor': CardProfessor,
+    
+  },
   data(){
     return {
       loading: false,
@@ -42,7 +49,7 @@ export default {
     }
   },
   methods: {
-    async searchProfessors(){
+    async getProfessors() {
       try {
         this.loading = true;
         this.professors = await professorService.getAllProfessors(this.searchTerm);
@@ -51,19 +58,13 @@ export default {
         console.dir(error);
       }
     },
+    searchProfessors(){
+      this.getProfessors();
+    },
   },
   
-  components: {
-    'app-card-professor': CardProfessor,
-  },
-  async created(){
-    try {
-      this.loading = true;
-      this.professors = await professorService.getAllProfessors();//TODO LOSI - HM KENE FAKTORIZALNI... Hogyan csinalni?
-      this.loading = false;
-    } catch (error) {
-      console.dir(error);
-    }
+  created(){
+    this.getProfessors();
   }
 }
 </script>

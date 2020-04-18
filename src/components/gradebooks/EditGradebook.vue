@@ -2,6 +2,7 @@
   <div>
     {{ gradebook }}
     <app-add-gradebook></app-add-gradebook>
+    <app-student-list></app-student-list>
     <app-add-student></app-add-student>
   </div>
 </template>
@@ -9,18 +10,34 @@
 <script>
 import AddGradebook from './AddGradebook';
 import AddStudent from '../students/AddStudent';
+import StudentList from '../students/StudentList'
 import gradebookService from '../../service/gradebookService';
 export default {
   name: 'EditGradebook',
   components: {
     'app-add-gradebook': AddGradebook,
     'app-add-student': AddStudent,
+    'app-student-list': StudentList,
   },
   data(){
     return {
       goBackHere:'',
-      gradebook: {},//TODO LOSI -EZT UTOLJARA HAGYNI elolvastatni a Losival a feladatot, megkérezni, hogy ő ezt hogyan értelmezi, mit is kellene csinalni. És persze: hogyan. Lépésről lépésre.
+      gradebook: {},//TODO LOSI -EZT UTOLJARA HAGYNI elolvastatni a Losival a feladatot, megkérezni, hogy ő ezt hogyan értelmezi, mit is kellene csinalni. És persze: hogyan. Lépésről lépésre. Ezt a végére hagyni... Utolsó feladatnak.
       gradebookId: this.$route.params.id || 0,
+    }
+  },
+  computed: {
+    comments(){
+      const comments = this.gradebook.comments || [];
+      return comments;
+    },
+    professor() {
+      const professor = this.gradebook.professor || {};
+      return professor;
+    },
+    students(){
+      const students = this.gradebook.students || {};
+      return students;
     }
   },
   methods: {
@@ -36,10 +53,12 @@ export default {
   async created(){
     console.dir(this.$route.path);
     if (this.goBackHere == '/my-gradebook') {
-      this.gradebook = await gradebookService.getMyGradebook();
+      const response = await gradebookService.getMyGradebook();
+      this.gradebook = response.data;
       this.gradebookId = this.gradebook.id;
     } else {
-      this.gradebook = await gradebookService.getGradebookById(this.gradebookId);
+      const response = await gradebookService.getGradebookById(this.gradebookId);
+      this.gradebook = response.data;
     }
     console.dir(this.gradebook);
   }

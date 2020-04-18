@@ -18,7 +18,7 @@
       <div v-else>
         <p>This gradebook does not have a professor.</p>
       </div>
-      <p class="card-text">Vreme kreiranja:{{ gradebook.created_at}} </p>
+      <p class="card-text">Vreme kreiranja: {{ gradebook.created_at }} </p>
     </div>
   </div>
 </template>
@@ -38,7 +38,8 @@ export default {
   computed: {
     professor() {
       return this.gradebook.professor || {};
-    }
+    },
+
   },
 }
 </script>
