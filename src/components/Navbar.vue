@@ -20,9 +20,7 @@
           <a @click="logout" class="nav-link" >Logout</a>
         </li>
 
-
       </ul>
-      
     </div>
   </nav>
 </template>
@@ -86,7 +84,6 @@ export default {
     }
   },
   created(){
-    // When refreshed, vuex will forget if the user is logged in. This is the solution.
     if (window.localStorage.getItem('loginToken') !==null) {
       this.setLoggedIn();
     } else {

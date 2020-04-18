@@ -13,17 +13,15 @@ import AddStudent from './components/students/AddStudent';
 import AddComment from './components/comments/AddComment';
 
 export const routes = [
-  //{ path: '*', redirect:'/login'},
   { path: '/login', name: 'login', component: Login },
   { path: '/register', name: 'register', component: Register },
 
   { path: '/', name: 'gradebooks', component: Gradebooks },
   { path: '/my-gradebook', name: 'MyGradebook', component: ShowGradebook },
-  { path: '/gradebooks/create', name: 'AddGradebook', component: AddGradebook },//this must be before ShowGradebook!!
+  { path: '/gradebooks/create', name: 'AddGradebook', component: AddGradebook },
   { path: '/gradebooks/:id', name: 'ShowGradebook', component: ShowGradebook },
   { path: '/gradebooks/:id/edit', name: 'EditGradebook', component: EditGradebook },
   
-
   { path: '/professors', name: 'professors', component: Professors },
   { path: '/professors/create', name: 'AddProfessors', component: AddProfessor },
   { path: '/professors/:id', name: 'ShowProfessor', component: ShowProfessor },

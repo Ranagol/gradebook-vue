@@ -20,6 +20,7 @@
       Loading...
     </h3>
 
+    <!-- Professors iteration -->
     <div class="d-flex flex-row flex-wrap">
       <app-card-professor v-for="professor in professors" :key="professor.id" :professor='professor'></app-card-professor>
     </div>
@@ -47,9 +48,8 @@ export default {
         this.professors = await professorService.getAllProfessors(this.searchTerm);
         this.loading = false;
       } catch (error) {
-        console.log('Error from professors/searchProfessors');
+        console.dir(error);
       }
-      
     },
   },
   
@@ -62,12 +62,8 @@ export default {
       this.professors = await professorService.getAllProfessors();//TODO LOSI - HM KENE FAKTORIZALNI... Hogyan csinalni?
       this.loading = false;
     } catch (error) {
-      console.log('Error from professorSErvice/getAllProfessors');
+      console.dir(error);
     }
-    
   }
-
-  
-
 }
 </script>

@@ -34,15 +34,6 @@ class ProfessorService {
       console.dir(error);
     }
   }
-
-
-
-
-
-
-
-  
-
 }
 
 const professorService = new ProfessorService;

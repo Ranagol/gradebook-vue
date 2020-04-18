@@ -6,7 +6,7 @@
       {{ `${fieldName}: ${validationError[0]}` }}
     </div>
     
-
+  <!-- ADD NEW GRADEBOOK NAME -->
   <form @submit.prevent="onSubmit">
     <h3>Add new gradebook:</h3>
     <div class="form-group row">
@@ -25,9 +25,7 @@
     </div>
     
     
-    
     <!-- SELECT PROFESSOR -->
-
     <!-- WHEN THERE ARE NO AVAILABLE PROFESSORS -->
     <div v-if="!availableProfessors.length" class="alert alert-info">
       <h5>Currently there are no available professors, that could be assigned to this gradebook.</h5>

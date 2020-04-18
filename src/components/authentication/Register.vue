@@ -2,9 +2,6 @@
   <form @submit.prevent="register">
     <h3>Register</h3>
 
-   
-
-   
     <!-- VALIDATION ERRORS-->
     <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
       {{ `${fieldName}: ${validationError[0]}` }}
@@ -14,8 +11,6 @@
     <h3 v-if="loading" class="alert alert-warning">
       Loading...
     </h3>
-
-
 
     <div class="form-group">
       <label for="first_name">First name</label>
@@ -85,7 +80,6 @@ export default {
       .catch((error) => {
         console.dir(error);
         if (error.response && error.response.status === 422) {
-          console.log('THIS IS THE ERROR FROM REGISTER PAGE CATCH');
           this.validationErrors = Object.assign({}, {}, error.response.data.errors);
         } else {
           console.dir(error);

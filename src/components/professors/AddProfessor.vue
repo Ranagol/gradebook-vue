@@ -2,6 +2,7 @@
   <div>
   <form @submit.prevent="onSubmitProf">
 
+    <!-- VALIDATION ERROR DISPLAY -->
     <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
       {{ `${fieldName}: ${validationError[0]}` }}
     </div>
@@ -40,13 +41,13 @@
     </div>
 
 
-    <!-- SELECT GRADEBOOK -->
-
+    
     <!-- WHEN THERE ARE NO AVAILABLE GRADEBOOKS -->
     <div v-if="!availableGradebooks.length" class="alert alert-info">
       <h5>Currently there are no available gradebooks, that could be assigned to this professor.</h5>
     </div>
 
+    <!-- SELECT GRADEBOOK -->
     <div v-if="availableGradebooks.length" class="form-group">
       <label for="gradebook">Assign this professor to a gradebook:</label>
       <select class="form-control" v-model="gradebook_id" id="gradebook">
@@ -54,7 +55,6 @@
         <option v-for="gradebook in availableGradebooks" :key="gradebook.id" :value="gradebook.id">{{ gradebook.name }}</option> -->
       </select>
     </div>
-
       
     <!-- PICTURE -->
     <button class="btn btn-success" @click="addImageUrl">Add Image URL</button>
@@ -94,7 +94,6 @@ export default {
     return{
       first_name:'',
       last_name:'',
-
       picture_urls: [],
       pictureUrlCount: 0,
       availableGradebooks: [],
@@ -116,7 +115,6 @@ export default {
       }
       try {
         await professorService.createProfessor(bodyProf);
-        console.log('Uspesno kreiran professor i professor picture');
         this.$router.push('/professors');
       } catch (error) {
         if (error.response) {
@@ -129,6 +127,7 @@ export default {
         }
       }
     },
+
     addImageUrl() {
       this.picture_urls.push(
         {
@@ -138,14 +137,14 @@ export default {
       );
       this.pictureUrlCount++;
     },
+
     deleteUrl(index) {
       this.picture_urls.splice(index, 1);
     },
+
   },
   async created(){
     this.availableGradebooks = await gradebookService.getAvaliableGradebooks();
   }
-  
-  
 }
 </script>

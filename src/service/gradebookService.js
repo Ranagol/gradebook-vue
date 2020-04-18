@@ -7,12 +7,8 @@ class GradebookService {
   }
 
   async getGradebookById(id){
-    try {
-      const response = await HTTP.get(`/gradebooks/${id}`);
-      return response.data;
-    } catch (error) {
-      console.dir(error);
-    }
+    const response = await HTTP.get(`/gradebooks/${id}`);
+    return response;
   }
 
   async getMyGradebook(){
@@ -40,12 +36,7 @@ class GradebookService {
   }
 
   async deleteGradebook(id){
-    try {
-      await HTTP.delete(`/gradebooks/${id}`);
-    } catch (error) {
-      console.log('Error with gradebook deleting');
-      console.dir(error);
-    }
+    await HTTP.delete(`/gradebooks/${id}`);
   }
 
 }

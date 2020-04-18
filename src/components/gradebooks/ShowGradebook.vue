@@ -1,8 +1,6 @@
 <template>
   <div>
     
-    <p>ShowGradebook</p>
-
     <div class="jumbotron">
       <div v-if="!isEmptyObject(gradebook)" class="d-flex flex-row justify-content-between">
         <button @click="goToAddStudent" class="btn btn-success">Add new student</button>
@@ -51,7 +49,7 @@
 
       <!-- Comment displaying -->
       <h5>Comments</h5>
-      <div v-if="comments !== undefined && comments.length > 0"><!-- if there are comments, then show them... -->
+      <div v-if="comments !== undefined && comments.length > 0">
         <ul>
           <li v-for="(comment, index) in comments" :key="comment.id">
             <strong>
@@ -69,7 +67,7 @@
           </li>
         </ul>
       </div>
-      <div v-else><!-- ...but if there are no comments, then show this: -->
+      <div v-else>
         <p>No comments yet. Add a comment!</p>
       </div>
       
@@ -141,11 +139,15 @@ export default {
 
     async deleteGradebook(id){
       if (confirm('Are you sure that you want to delete this gradebook?')) {
-        await gradebookService.deleteGradebook(id);
-        console.log('Gradebook deleted');
-        this.$router.push('/');
+        //TODO LOSI most akkor nekem minden axiosos muveletet at kel csinalnom ugy, hogy az aktivalo reszen legyen a try catch, ne a szerviszben?
+        try {
+          await gradebookService.deleteGradebook(id);
+          this.$router.push('/');
+        } catch (error) {
+          console.dir(error);//TODO LOSI - Losi nezze meg, hogy a 3000-es teszteleskor ez igy elfogadahto-e
+          alert(error.response.data.message);
+        }
       }
-      
     },
 
     goToAddStudent(){
@@ -175,9 +177,8 @@ export default {
         return false
       }
     }
-
-    
   },
+
   computed: {
     comments(){
       const comments = this.gradebook.comments || [];
@@ -188,6 +189,8 @@ export default {
       return professor;
     }
   },
+
+  // is the user aiming for '/my-gradebook' or for the '/gradebooks/:id'?
   async created(){
     this.loading = true;
     console.dir(this.$route.path);
@@ -195,7 +198,12 @@ export default {
       this.gradebook = await gradebookService.getMyGradebook();
       this.gradebookId = this.gradebook.id;
     } else {
-      this.gradebook = await gradebookService.getGradebookById(this.gradebookId);
+      try {
+        const response = await gradebookService.getGradebookById(this.gradebookId);
+        this.gradebook = response.data;
+      } catch (error) {//TODO LOSI nem tudom hogy megfogni a hibat, es hogy kijelezni. Mikor hibas requestet generalok 3000-es id-vel, a valasz undefined
+        console.dir(error);
+      }
     }
     this.loading = false;
     console.dir(this.gradebook);

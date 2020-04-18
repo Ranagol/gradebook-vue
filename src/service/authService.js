@@ -6,7 +6,7 @@ export default class AuthService extends BaseService {
       this.axios.post('register', { first_name, last_name, email, password, password_confirmation})
       .then((response) => {
         this.localStorageSetUp(response);
-        resolve(response.data.token);//this is sent to try on the calling functions
+        resolve(response.data.token);
       }).
       catch((error) => {
         console.log('Error from register authService', error.response.data);
@@ -41,10 +41,6 @@ export default class AuthService extends BaseService {
     window.localStorage.removeItem('loginToken');
     window.localStorage.removeItem('user_id');
     delete this.axios.defaults.headers.common['Authorization'];
-  }
-
-  isAuthenticated() {
-    return !!window.localStorage.getItem('loginToken');
   }
 }
 export const authService = new AuthService();

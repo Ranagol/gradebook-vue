@@ -21,6 +21,7 @@
       Loading...
     </h3>
 
+    <!-- CardGradebook.vue -->
     <div class="d-flex flex-row flex-wrap">
       <app-cardgradebook
         v-for="gradebook in gradebooks"
@@ -55,9 +56,8 @@ export default {
       this.gradebooks = await gradebookService.getAllGradebooks();
       this.loading = false;
     } catch (error) {
-      console.log('Error from gradebookSErvice/getAllGradebooks');
+      console.dir(error);
     }
-    
   }
 }
 </script>

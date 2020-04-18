@@ -43,7 +43,6 @@ export default {
     ...mapActions(['setLoggedIn']),
     login(){
       this.loading = true;
-      console.log(this.email, this.password);
       authService.login(this.email, this.password)
       .then(() => {
         this.setLoggedIn();

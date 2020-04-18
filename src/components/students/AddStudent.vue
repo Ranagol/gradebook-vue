@@ -4,7 +4,7 @@
   <form @submit.prevent="onSubmit">
 
     <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
-      {{ `${fieldName}: ${validationError[0]}` }}<!--fieldName = first_name. validationError[0] = the actual error. [0]=because sometimes there could be some not needed additional garbage, but under [0] is always the error message that we need. -->
+      {{ `${fieldName}: ${validationError[0]}` }}
     </div>
   
     <!-- FIRST NAME -->
@@ -63,7 +63,6 @@
     </div>
 
   </form>
-
   </div>
 </template>
 
@@ -78,7 +77,7 @@ export default {
       last_name:'',
       url_slika:'',
       gradebook_id: this.$route.params.id,
-      validationErrors: {},//the validation error will be an object
+      validationErrors: {},
       goBackHere:'',
     }
   },
@@ -93,28 +92,23 @@ export default {
         await studentService.createStudent(student, this.gradebook_id);
         this.$router.push(this.goBackHere);
       } catch (error) {
-        console.dir(error);//this is just for us, to understand the error property structure
-        if (error.response) {//if there is an error response from api...
-          if (error.response.status === 422) {//...and it's status is 422
-            this.validationErrors = {};//empty the validationError
-            this.validationErrors = Object.assign({}, {}, error.response.data.errors);//We use Object.assign, because this way Vue can recognise that this object has changed, and will react. Object assign, please create an empty {}, merge the second empty {} with error.response.data.errors, put it into the first empty {}, and after this, put all this into this.validationErrors)
-          } else if (error.response.status === 400) {//in case if we expect from api an error with a different status than the previous 422 status
-            //do something...
+        if (error.response) {
+          if (error.response.status === 422) {
+            this.validationErrors = {};
+            this.validationErrors = Object.assign({}, {}, error.response.data.errors);
+          } else if (error.response.status === 400) {
+            console.dir(error.response);
           }
         } else {
-          console.dir(error);//this is for a case when we have an error not from the api, but from Vue...
+          console.dir(error);
         }
       }
     }
   },
   beforeRouteEnter (to, from, next) {
-    console.log(`Student create guard activated. From: ${from.path} to: ${to.path}`);
     next((vm) => {
       vm.goBackHere = from.path;
-      console.log('goBackHere value is now: ', vm.goBackHere);
     })
   }
-
-  
 }
 </script>

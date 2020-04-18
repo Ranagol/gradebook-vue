@@ -10,7 +10,6 @@
     <div class="jumbotron">
       <h5 class="display-4">Professor: {{ professor.first_name }} {{ professor.last_name }}</h5>
 
-
       <!-- Prikazivanje dnevnika -->
       <div v-if="professor.gradebook !== null">
         <p class="lead">Ime dnevnika: <router-link :to="`/gradebooks/${gradebook.id}`" class="link">{{ gradebook.name }}</router-link> </p>
@@ -18,9 +17,6 @@
       <div v-else>
         <p>This professor does not have a gradebook yet.</p>
       </div>
-      
-      
-      
       <hr class="my-4">
 
       <!-- Prikazivanje broja ucenika -->
@@ -57,6 +53,5 @@ export default {
     this.professor = await professorService.getProfessorById(this.$route.params.id);
     this.loading = false;
   }
-  
 }
 </script>

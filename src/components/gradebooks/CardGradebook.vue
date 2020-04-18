@@ -40,10 +40,6 @@ export default {
       return this.gradebook.professor || {};
     }
   },
-  methods: {
-   
-  }
-  
 }
 </script>
 
@@ -53,5 +49,4 @@ export default {
   min-width: 200px;
   width: 300px;
 }
-
 </style>
