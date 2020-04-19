@@ -1,15 +1,14 @@
 <template>
   <div class="card card-width border border-success ">
     <div>
-   
       <img class="card-img-top" :src="firstPicture.picture_url" alt="Card image cap">
     </div>
     
     <div class="card-body">
       <h5 class="card-title"></h5>
-      <h5 class="card-title">
+      <h5 class="card-title">Professor:
         <router-link :to="`/professors/${professor.id}`"  class="link">
-          Professor: {{ professor.first_name }} {{ professor.last_name }}
+           {{ professor.first_name }} {{ professor.last_name }}
         </router-link>
       </h5>
 

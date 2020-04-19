@@ -48,10 +48,16 @@ export default {
     }
   },
   
+  //TODO LOSI nem fogja meg a hibat egyaltalan.Valami furcsa valasz jon a Laravelbol, mikor 3000-es id kerek.
   async created(){
-    this.loading = true;
-    this.professor = await professorService.getProfessorById(this.$route.params.id);
-    this.loading = false;
+    try {
+      this.loading = true;
+      const response = await professorService.getProfessorById(this.$route.params.id);
+      this.professor = response.data;
+      this.loading = false;
+    } catch (error) {
+      console.dir(error);
+    }
   }
 }
 </script>

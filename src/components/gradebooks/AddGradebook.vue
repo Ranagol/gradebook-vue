@@ -86,8 +86,12 @@ export default {
     }
   },
   async created(){
-    this.availableProfessors = await professorService.getAvaliableProfessors();
+    try {
+      const response = await professorService.getAvaliableProfessors();
+      this.availableProfessors = response.data;
+    } catch (error) {
+      alert(`There was an error during getting all available professors.\nError: ${error.response.statusText}`);
+    }
   }
-  
 }
 </script>

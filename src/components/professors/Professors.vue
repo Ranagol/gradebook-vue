@@ -10,6 +10,7 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
+    <!-- TODO LOSI a consolban állandóan ott van egy "st" kiírás. Ha el lehet tüntetni rövid idő alatt, akkor el kéne hogy tűnjön. -->
 
     <!-- If there is no data in the db... -->
     <div v-if="!professors.length" class="alert alert-info">

@@ -148,10 +148,8 @@ export default {
       const response = await gradebookService.getAvaliableGradebooks();
       this.availableGradebooks = response.data
     } catch (error) {
-      alert(error.response.statusText);
       alert(`There was an error during getting all available gradebooks.\nError: ${error.response.statusText}`);
     }
-    
   }
 }
 </script>
