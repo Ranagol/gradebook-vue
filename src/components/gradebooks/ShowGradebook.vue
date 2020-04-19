@@ -19,7 +19,7 @@
       </h3>
      
       <h3 class="display-6 top-margin" >Gradebook: {{ gradebook.name }}</h3>
-
+      
       <!-- Professor displaying -->
       <div v-if="gradebook.professor !==undefined && gradebook.professor !==null ">
         <p class="lead">Professor: 
@@ -38,10 +38,6 @@
       <!-- Student displaying -->
       <app-student-list :students = 'students' ></app-student-list>
 
-
-
-  
-      
 
       <!-- Comment displaying -->
       <h5>Comments</h5>
@@ -200,14 +196,15 @@ export default {
     console.dir(this.$route.path);
     if (this.$route.path == '/my-gradebook') {
       try {
-        this.gradebook = await gradebookService.getMyGradebook();
+        const response = await gradebookService.getMyGradebook();
+        this.gradebook = response.data;
         this.gradebookId = this.gradebook.id;
       } catch (error) {
         console.dir(error);
         alert(`There was an error getting my-gradbook from db.\nError: ${error.response.data.message}`);
       }
     } else {
-      try {//TODO LOSI problema: nincs hibakijelzes, ha 3000 teszek be id helyett
+      try {
         const response = await gradebookService.getGradebookById(this.gradebookId);
         this.gradebook = response.data;
       } catch (error) {

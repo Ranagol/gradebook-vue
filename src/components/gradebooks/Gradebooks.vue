@@ -3,13 +3,10 @@
 
     <div class="d-flex flex-row justify-content-between">
       <h3>Gradebooks</h3>
-
       <app-paginator ref="paginator" :disable="loading" @change-page="changePage" />
 
       <!-- SEARCH FIELD -->
-      <!-- TODO LOSI ---SEARCH NEM DOLGOZIK. Itt a filter es a paginacio egyutt kellene hogy dolgozzon, azaz a kereses eredmenyei is kellene hogy paginalodjanak.  -->
-      <!--TODO gradebooks sorrendet megforditani -->
-      <form @submit.prevent="searchProfessors" class="form-inline my-2 my-lg-0">
+      <form @submit.prevent="getAllGradebooks" class="form-inline my-2 my-lg-0">
         <input v-model="searchTerm" name="searchTerm" class="form-control" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>

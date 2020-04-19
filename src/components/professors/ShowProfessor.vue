@@ -48,16 +48,16 @@ export default {
     }
   },
   
-  //TODO LOSI nem fogja meg a hibat egyaltalan.Valami furcsa valasz jon a Laravelbol, mikor 3000-es id kerek.
   async created(){
+    this.loading = true;//TODO ANDOR minden loadingot atjavitani erre a fazonra ha async await (login register ne bantsd)
     try {
-      this.loading = true;
       const response = await professorService.getProfessorById(this.$route.params.id);
       this.professor = response.data;
-      this.loading = false;
     } catch (error) {
       console.dir(error);
+      alert(`There was an error getting the selected single-professor from db.\nError: ${error.response.data.message}`);
     }
+    this.loading = false;
   }
 }
 </script>

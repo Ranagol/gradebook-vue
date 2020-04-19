@@ -1,7 +1,7 @@
 <template>
   <div>
     {{ gradebook }}
-    <app-add-gradebook></app-add-gradebook>
+    <app-add-gradebook :gradebook = 'gradebook'></app-add-gradebook>
     <app-student-list></app-student-list>
     <app-add-student></app-add-student>
   </div>
@@ -11,7 +11,7 @@
 import AddGradebook from './AddGradebook';
 import AddStudent from '../students/AddStudent';
 import StudentList from '../students/StudentList'
-import gradebookService from '../../service/gradebookService';
+//import gradebookService from '../../service/gradebookService';
 export default {
   name: 'EditGradebook',
   components: {
@@ -23,7 +23,6 @@ export default {
     return {
       goBackHere:'',
       gradebook: {},
-      gradebookId: this.$route.params.id || 0,
     }
   },
   computed: {
@@ -47,20 +46,14 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next((vm) => {
+      //this.goBackHere is the path where the user should be returned after the editing
       vm.goBackHere = from.path;
     })
   },
+
   async created(){
-    console.dir(this.$route.path);
-    if (this.goBackHere == '/my-gradebook') {
-      const response = await gradebookService.getMyGradebook();
-      this.gradebook = response.data;
-      this.gradebookId = this.gradebook.id;
-    } else {
-      const response = await gradebookService.getGradebookById(this.gradebookId);
-      this.gradebook = response.data;
-    }
-    console.dir(this.gradebook);
+    
+    
   }
 
 }

@@ -7,8 +7,9 @@
     </div>
     
   <!-- ADD NEW GRADEBOOK NAME -->
-  <form @submit.prevent="onSubmit">
-    <h3>Add new gradebook:</h3>
+  <form @submit.prevent="createNewGradebook">
+    <h3 v-if="!editMode">Add new gradebook:</h3>
+    <h3 v-else>Edit gradebook</h3>
     <div class="form-group row">
       <label for="name" class="col-4 col-form-label">Gradebook name</label>
       <div class="col-8">
@@ -23,7 +24,7 @@
         </div>
       </div>
     </div>
-    
+{{ gradebook }}   
     
     <!-- SELECT PROFESSOR -->
     <!-- WHEN THERE ARE NO AVAILABLE PROFESSORS -->
@@ -31,7 +32,7 @@
       <h5>Currently there are no available professors, that could be assigned to this gradebook.</h5>
     </div>
     <div v-if="availableProfessors.length" class="form-group">
-      <label for="professor">Assign this gradebook to a professor:</label>
+      <label for="professor">Assign this gradebook to an available professor:</label>
       <select class="form-control" v-model="professor_id" id="professor">
         <option selected value="">Do not assign</option>
         <option v-for="professor in availableProfessors" :key="professor.id" :value="professor.id">{{ professor.first_name }}</option>
@@ -58,13 +59,16 @@ export default {
   data(){
     return{
       name:'',
+      gradebookId:'',
       professor_id:'',
       availableProfessors: [],
       validationErrors: {},
+      editMode: false,//because by default this is in add-new-gradebook-mode
     }
   },
+  props: ['gradebook'],
   methods: {
-    async onSubmit(){
+    async createNewGradebook(){
       const gradebook = {
         name: this.name,
         professor_id: this.professor_id,
@@ -86,12 +90,30 @@ export default {
     }
   },
   async created(){
-    try {
-      const response = await professorService.getAvaliableProfessors();
-      this.availableProfessors = response.data;
-    } catch (error) {
-      alert(`There was an error during getting all available professors.\nError: ${error.response.statusText}`);
+    console.dir(this.$route.path);
+    if (this.$route.path == "/gradebooks/create") {//IF WE ARE CREATING A NEW GRADEBOOK
+      this.editMode = false;
+      try {
+        const response = await professorService.getAvaliableProfessors();
+        this.availableProfessors = response.data;
+      } catch (error) {
+        alert(`There was an error during getting all available professors.\nError: ${error.response.statusText}`);
+      }
+    } else {//IF WE ARE EDITING A GRADEBOOK
+      this.editMode = true;
+      try {
+        const response = await professorService.getAvaliableProfessors();
+        this.availableProfessors = response.data;
+      } catch (error) {
+        alert(`There was an error during getting all available professors.\nError: ${error.response.statusText}`);
+      }
+      this.name = this.gradebook.name;
+      this.gradebookId = this.gradebook.id
+      console.log(this.name, this.gradebookId);
+
     }
+
+    
   }
 }
 </script>
