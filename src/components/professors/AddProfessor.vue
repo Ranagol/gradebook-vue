@@ -13,7 +13,6 @@
       <label for="first_name" class="col-4 col-form-label">First Name</label>
       <div class="col-8">
         <div class="input-group">
-          <!--TODO LOSI MAXLENGTH ISSUE, UGYANAZ MINT AZ ELOBB -->
           <input
             id="first_name"
             name="first_name"
@@ -22,7 +21,6 @@
             v-model="first_name"
             required
             minlength="1"
-            maxlength="255"
           />
         </div>
       </div>
@@ -41,7 +39,6 @@
             v-model="last_name"
             required
             minlength="1"
-            maxlength="255"
           />
         </div>
       </div>

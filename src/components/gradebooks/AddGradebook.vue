@@ -14,8 +14,6 @@
       <label for="name" class="col-4 col-form-label">Gradebook name</label>
       <div class="col-8">
         <div class="input-group">
-          <!-- TODO LOSI - maxlength nem dolgozik a html vedelemben -->
-          <!-- TODO LOSI 500 (Internal Server Error)---ezt kapok, ha 500 charactert gepelek be -->
           <input
             id="name"
             name="name"
@@ -24,7 +22,6 @@
             v-model="name"
             required
             minlength="2"
-            maxlength="255"
           />
         </div>
       </div>
