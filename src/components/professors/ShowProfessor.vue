@@ -49,7 +49,7 @@ export default {
   },
   
   async created(){
-    this.loading = true;//TODO ANDOR minden loadingot atjavitani erre a fazonra ha async await (login register ne bantsd)
+    this.loading = true;
     try {
       const response = await professorService.getProfessorById(this.$route.params.id);
       this.professor = response.data;

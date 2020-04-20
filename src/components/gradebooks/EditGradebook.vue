@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ gradebook }}
+    <h1>THIS PAGE IS CURRENTLY OUT OF ORDER. PLEASE COME BACK LATER.</h1>
     <app-add-gradebook :gradebook = 'gradebook'></app-add-gradebook>
     <app-student-list></app-student-list>
     <app-add-student></app-add-student>

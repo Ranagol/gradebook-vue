@@ -201,7 +201,7 @@ export default {
         this.gradebookId = this.gradebook.id;
       } catch (error) {
         console.dir(error);
-        alert(`There was an error getting my-gradbook from db.\nError: ${error.response.data.message}`);
+        alert(`There was an error getting my-gradebook from db.\nError: ${error.response.data.message}`);
       }
     } else {
       try {

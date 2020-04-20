@@ -84,7 +84,7 @@ export default {
     }
   },
   created(){
-    if (window.localStorage.getItem('loginToken') !==null) {
+    if (window.localStorage.getItem('loginToken') !==null && window.localStorage.getItem('loginToken') !=='') {
       this.setLoggedIn();
     } else {
       this.setLoggedOut();

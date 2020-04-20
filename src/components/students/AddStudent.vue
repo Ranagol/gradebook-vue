@@ -6,7 +6,7 @@
     <div class="alert alert-danger" v-for="(validationError, fieldName) in validationErrors" :key="`validation-errors-${fieldName}`">
       {{ `${fieldName}: ${validationError[0]}` }}
     </div>
-  
+    <!-- LOSI TODO MAXLENGTH ITT SE DOLGOZIK -->
     <!-- FIRST NAME -->
     <div class="form-group row">
       <label for="first_name" class="col-4 col-form-label">First Name</label>
@@ -18,6 +18,7 @@
             type="text"
             class="form-control here"
             v-model="first_name"
+            required
           />
         </div>
       </div>
@@ -34,6 +35,7 @@
             type="text"
             class="form-control here"
             v-model="last_name"
+            required
           />
         </div>
       </div>
@@ -50,6 +52,7 @@
             type="text"
             class="form-control here"
             v-model="url_slika"
+            required
           />
         </div>
       </div>
